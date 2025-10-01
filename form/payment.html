@@ -57,8 +57,8 @@ body{
 
 /* --- Headers --- */
 h1{
-  font-weight: 800; /* Зробив більш помітним */
-  margin-bottom: 35px; /* Збільшив відступ */
+  font-weight: 800;
+  margin-bottom: 35px;
   font-size: 2.4rem;
   color: var(--color-text-main);
   text-shadow: 0 1px 0 rgba(255,255,255,0.7);
@@ -72,7 +72,7 @@ h1{
   box-shadow: 0 8px 25px rgba(0, 122, 255, 0.12);
   border: 1px solid #a8c4ff;
   max-width: 450px;
-  margin: 0 auto 40px auto; /* Збільшив нижній відступ */
+  margin: 0 auto 40px auto;
 }
 .price-label { font-size: 1.1rem; font-weight: 800; margin-bottom: 15px; color: var(--color-accent-blue); }
 .price-old-details { display:flex; justify-content:center; align-items:center; gap:15px; margin-bottom:10px; }
@@ -88,10 +88,10 @@ h1{
 /* --- Card Action Block (Головний блок дії - новий, менш яскравий) --- */
 .card-action-block{
   border-radius: 20px;
-  padding: 0; /* Прибрав основний паддінг, щоб картка була "ближче" до краю */
+  padding: 0;
   margin-bottom: 30px;
   text-align: center;
-  max-width: 480px; /* Збільшив max-width для цього блоку */
+  max-width: 480px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -185,6 +185,7 @@ h1{
   border-radius: 8px;
   border: 1px solid var(--color-accent-blue);
   margin-top: 10px;
+  cursor: pointer; /* Додано курсор для клікабельності */
 }
 
 
@@ -197,10 +198,10 @@ h1{
 /* --- Button --- */
 .btn-primary{
   border-radius: 16px;
-  font-weight: 700; /* Зробив жирнішим */
+  font-weight: 700;
   background-color: var(--color-accent-blue);
   border-color: var(--color-accent-blue);
-  padding: 16px 20px; /* Збільшив вертикальний паддінг */
+  padding: 16px 20px;
   font-size: 1.1rem;
   transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
   box-shadow: 0 8px 20px rgba(0,122,255,0.3);
@@ -237,7 +238,9 @@ h1{
     <div class="price-new-wrapper"><div class="price-new">850 грн</div></div>
     <p class="discount-note">Застосовано <strong>персональну знижку</strong>, зафіксуйте ціну зараз!</p>
   </div>
-
+  
+---
+ 
     <div class="card-action-block">
     <h2 class="h5 text-start mb-3" style="font-weight:700; padding-left:5px; color:var(--color-text-main);">1. Здійсніть переказ</h2>
 
@@ -245,7 +248,7 @@ h1{
       <div class="card-brand">VISA</div>
       <div class="card-chip" aria-hidden="true"></div>
 
-            <input
+      <input
         id="cardNumberInput"
         class="card-number-input"
         type="text"
@@ -259,12 +262,14 @@ h1{
       <div class="card-number-hint">Натисніть на номер, щоб скопіювати.</div>
     </div>
     
-    <div class="payment-instruction-block">
+        <div class="payment-instruction-block">
       <p>Перекажіть суму <strong>850 грн</strong> на вказану вище картку.</p>
       <p><strong>ОБОВ'ЯЗКОВО:</strong> додайте у коментар до платежу ваш персональний промокод:</p>
       <div class="promo-code-box" id="promoCodeBox">PROMO123</div>
     </div>
   </div>
+
+---
 
   <div class="payment-text">
     <h2 class="h5 text-start mb-3" style="font-weight:700; color:var(--color-text-main);">2. Завантажте квитанцію</h2>
@@ -288,18 +293,31 @@ const cardNumberInput = document.getElementById('cardNumberInput');
 cardNumberInput.addEventListener('click', (e) => {
   // Для input з атрибутом readonly
   cardNumberInput.select();
-  document.execCommand('copy');
-  alert("Номер картки скопійовано: " + cardNumberInput.value);
+  // Перевірка, чи доступний Clipboard API (більш сучасний)
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(cardNumberInput.value).then(() => {
+      alert("Номер картки скопійовано: " + cardNumberInput.value);
+    }).catch(err => {
+      // Використовуємо стару команду, якщо Clipboard API не вдалося
+      document.execCommand('copy');
+      alert("Номер картки скопійовано: " + cardNumberInput.value);
+    });
+  } else {
+    document.execCommand('copy');
+    alert("Номер картки скопійовано: " + cardNumberInput.value);
+  }
 });
 
 // Скрипт для копіювання промокоду
 const promoCodeBox = document.getElementById('promoCodeBox');
 promoCodeBox.addEventListener('click', (e) => {
+  // Використовуємо сучасний Clipboard API
   navigator.clipboard.writeText(promoCodeBox.textContent.trim()).then(() => {
+    const originalText = promoCodeBox.textContent;
     promoCodeBox.textContent = 'Скопійовано!';
-    setTimeout(() => { promoCodeBox.textContent = 'PROMO123'; }, 1000);
+    setTimeout(() => { promoCodeBox.textContent = originalText; }, 1000);
   }, () => {
-    // Fallback для старих браузерів
+    // Fallback для старих браузерів: використовуємо alert, оскільки немає прямого доступу
     alert("Промокод PROMO123 скопіюйте вручну.");
   });
 });
