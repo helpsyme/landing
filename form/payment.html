@@ -7,7 +7,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* Залишаємо всі ваші стилі без змін */
 * { box-sizing: border-box; }
 
 :root{
@@ -291,8 +290,11 @@ h1{
 <script>
 /**
  * Функція для запуску анімації феєрверку
+ * @param {number} particleCount - кількість частинок
+ * @param {number} scalar - коефіцієнт розміру частинок (менше число = менше частинок)
+ * @param {object} origin - точка початку
  */
-function launchConfetti() {
+function launchConfetti(particleCount, scalar, origin) {
   const defaults = {
     spread: 360,
     ticks: 50,
@@ -302,49 +304,39 @@ function launchConfetti() {
     colors: ['#007aff', '#ff3b30', '#c70039', '#ffcc00', '#ffffff']
   };
 
-  // Вибух 1: Зверху вліво
   confetti({
     ...defaults,
-    particleCount: 80,
-    scalar: 1.2,
-    shapes: ['star', 'circle'],
-    origin: { x: 0.2, y: 0 }
+    particleCount: particleCount,
+    scalar: scalar, // Використовуємо 0.8 для дрібного конфетті
+    origin: origin
   });
-
-  // Вибух 2: Зверху вправо
-  confetti({
-    ...defaults,
-    particleCount: 80,
-    scalar: 1.2,
-    shapes: ['square', 'circle'],
-    origin: { x: 0.8, y: 0 }
-  });
-
-  // Третій, більший вибух по центру
-  setTimeout(() => {
-    confetti({
-      ...defaults,
-      particleCount: 150,
-      scalar: 2,
-      shapes: ['star', 'circle'],
-      origin: { x: 0.5, y: 0.5 },
-      startVelocity: 50,
-      ticks: 100,
-    });
-  }, 150);
 }
 
-// 1. Анімація при завантаженні сторінки
+/**
+ * Основний запуск феєрверку з дрібним конфетті
+ */
+function fireSmallConfetti() {
+  // Вибух 1: Зверху вліво (дрібне конфетті)
+  launchConfetti(80, 0.8, { x: 0.2, y: 0.3 }); 
+  
+  // Вибух 2: Зверху справа (дрібне конфетті)
+  launchConfetti(80, 0.8, { x: 0.8, y: 0.3 }); 
+
+  // Додатковий невеликий вибух по центру (трохи більші частинки для різноманітності)
+  setTimeout(() => {
+    launchConfetti(100, 1, { x: 0.5, y: 0.5 });
+  }, 100);
+}
+
+// 1. Анімація при завантаженні сторінки (через 0.5 секунди)
 document.addEventListener('DOMContentLoaded', () => {
-    // Невеликий таймер, щоб анімація не перекривала завантаження
-    setTimeout(launchConfetti, 500); 
+    setTimeout(fireSmallConfetti, 500); 
 });
 
 // 2. Копіювання номера карти
 const cardNumberInput = document.getElementById('cardNumberInput');
 cardNumberInput.addEventListener('click', () => {
   cardNumberInput.select();
-  // Використовуємо сучасний Clipboard API для кращої сумісності
   navigator.clipboard.writeText(cardNumberInput.value).then(() => {
       alert("Номер картки скопійовано: " + cardNumberInput.value);
   }).catch(err => {
@@ -372,7 +364,7 @@ promoCodeBox.addEventListener('click', () => {
 // 4. Кнопка загрузки квитанции + повтор феєрверку
 document.getElementById("uploadReceiptBtn").addEventListener('click', (e)=>{
   e.preventDefault();
-  launchConfetti(); // Запуск феєрверку при натисканні
+  fireSmallConfetti(); // Запуск дрібного феєрверку при натисканні
   alert("Тут можна додати логіку завантаження квитанції. Після успішного завантаження, на ваш email прийде лист із посиланням на консультацію.");
 });
 </script>
