@@ -50,24 +50,24 @@
   
   .container { max-width: 600px; padding-top: 20px; padding-bottom: 20px; }
 
-  /* Минимальные боковые отступы для мобильных */
   @media (max-width: 576px) {
     body {
-      padding-left: 10px;
-      padding-right: 10px;
+      padding: 0; /* убираем отступы */
     }
     .container {
       max-width: 100%;
-      padding-left: 10px;
-      padding-right: 10px;
-      padding-top: 20px;
-      padding-bottom: 20px;
+      padding: 0 10px; /* минимальные боковые отступы */
     }
     form {
-      padding: 25px 15px; /* меньше паддинги внутри формы */
+      width: 100%;
+      padding: 20px 15px; /* компактная форма */
+      border-radius: 16px;
     }
     .price-block {
-      padding: 25px 15px;
+      padding: 20px 15px;
+    }
+    h1 {
+      font-size: 1.8rem;
     }
   }
 
