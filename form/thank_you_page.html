@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дякуємо за оплату</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-background-start: #ecedf3;
+  --color-background-end: #d8d8e5;
+  --color-card-bg: #ffffff;
+  --color-text-main: #1c1c1e;
+  --color-accent-blue: #007aff;
+  --color-shadow: rgba(0,0,0,0.08);
+  --color-success: #28a745;
+}
+
+/* Global */
+body{
+  background:
+    repeating-linear-gradient(-45deg, rgba(0,0,0,0.04), rgba(0,0,0,0.04) 1px, transparent 1px, transparent 20px),
+    linear-gradient(150deg, var(--color-background-start) 0%, var(--color-background-end) 100%);
+  font-family: "Inter", sans-serif;
+  color: var(--color-text-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+/* Container */
+.container{
+  max-width: 650px;
+  width: 100%;
+  background: var(--color-card-bg);
+  border-radius: 28px;
+  padding: 50px 40px;
+  text-align: center;
+  box-shadow: 0 10px 30px var(--color-shadow);
+}
+
+/* Heading */
+h1{
+  font-weight: 800;
+  font-size: 2.4rem;
+  margin-bottom: 20px;
+  color: var(--color-success);
+}
+
+h2{
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: var(--color-text-main);
+}
+
+/* Text */
+p{
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.email-highlight{
+  font-weight: 700;
+  color: var(--color-accent-blue);
+}
+
+/* Button */
+.btn-primary{
+  border-radius: 16px;
+  font-weight: 700;
+  background-color: var(--color-accent-blue);
+  border: none;
+  padding: 14px 20px;
+  font-size: 1.1rem;
+  margin-top: 25px;
+  width: 100%;
+  box-shadow: 0 6px 18px rgba(0,122,255,0.3);
+  transition: all 0.2s ease-in-out;
+}
+.btn-primary:hover{
+  background-color: #0066cc;
+  transform: translateY(-2px);
+}
+
+/* Confetti fix */
+canvas{ pointer-events:none !important; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>✅ Дякуємо!</h1>
+  <h2>Оплата успішно підтверджена</h2>
+  <p>Всі подальші інструкції та деталі консультації були <br><span class="email-highlight">надіслані на вашу електронну пошту</span>.</p>
+  <p>Якщо ви не бачите листа — перевірте папку <b>«Спам»</b> або <b>«Промоакції»</b>.</p>
+
+  <a href="/" class="btn btn-primary">Повернутись на головну</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script>
+// Конфетті при завантаженні
+function launchConfetti(){
+  confetti({
+    particleCount: 120,
+    spread: 90,
+    origin: { y: 0.6 },
+    colors: ['#007aff','#28a745','#ffcc00','#ff3b30']
+  });
+}
+document.addEventListener("DOMContentLoaded", ()=>{
+  setTimeout(launchConfetti, 500);
+});
+</script>
+</body>
+</html>
