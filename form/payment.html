@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Дякуємо за бронювання - Оплата</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Space Mono для цифр на карте и Inter для общего текста -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* --- Box-sizing --- */
@@ -13,70 +12,69 @@
 
 /* --- CSS Variables --- */
 :root{
-  --color-background-start: #ecedf3;
-  --color-background-end: #d8d8e5;
-  --color-card-bg: #ffffff;
-  --color-text-main: #1c1c1e;
-  --color-accent-blue: #007aff;
-  --color-light-blue-bg: #f0f7ff;
-  --color-promo-bg-start: #e1e9ff;
-  --color-promo-bg-end: #f5f8ff;
-  --color-border-light: #e0e0e8;
-  --color-shadow: rgba(0,0,0,0.08);
-  --color-price-final: #c70039;
-  --color-discount-badge: #ff3b30;
-  --card-gradient-start: linear-gradient(135deg,#2b6df6,#1fb7ff);
-  --card-gradient-soft: linear-gradient(135deg,#2d66f5,#66c1ff);
+  --color-background-start: #ecedf3;
+  --color-background-end: #d8d8e5;
+  --color-card-bg: #ffffff;
+  --color-text-main: #1c1c1e;
+  --color-accent-blue: #007aff;
+  --color-light-blue-bg: #f0f7ff;
+  --color-promo-bg-start: #e1e9ff;
+  --color-promo-bg-end: #f5f8ff;
+  --color-border-light: #e0e0e8;
+  --color-shadow: rgba(0,0,0,0.08);
+  --color-price-final: #c70039;
+  --color-discount-badge: #ff3b30;
+  --card-gradient-start: linear-gradient(135deg,#2b6df6,#1fb7ff);
+  --card-gradient-soft: linear-gradient(135deg,#2d66f5,#66c1ff);
 }
 
 /* --- Global Styles --- */
 body{
-  background:
-    repeating-linear-gradient(-45deg, rgba(0,0,0,0.05), rgba(0,0,0,0.05) 1px, transparent 1px, transparent 20px),
-    linear-gradient(150deg, var(--color-background-start) 0%, var(--color-background-end) 100%);
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-  color: var(--color-text-main);
-  line-height: 1.6;
-  padding: 40px 20px;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background:
+    repeating-linear-gradient(-45deg, rgba(0,0,0,0.05), rgba(0,0,0,0.05) 1px, transparent 1px, transparent 20px),
+    linear-gradient(150deg, var(--color-background-start) 0%, var(--color-background-end) 100%);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  color: var(--color-text-main);
+  line-height: 1.6;
+  padding: 40px 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* --- Container --- */
 .container{
-  /* уменьшил max-width для десктопа — более компактный вид */
-  max-width: 740px; /* раньше 900px */
-  width: 90%;
-  background: var(--color-card-bg);
-  border-radius: 28px;
-  padding: 40px 45px;
-  box-shadow: 0 10px 30px var(--color-shadow);
-  text-align: center;
-  margin: 0 auto;
+  max-width: 740px;
+  width: 90%;
+  background: var(--color-card-bg);
+  border-radius: 28px;
+  padding: 40px 45px;
+  box-shadow: 0 10px 30px var(--color-shadow);
+  text-align: center;
+  margin: 0 auto;
 }
 
 /* --- Headers --- */
 h1{
-  font-weight: 700;
-  margin-bottom: 30px;
-  font-size: 2.2rem;
-  color: var(--color-text-main);
-  text-shadow: 0 1px 0 rgba(255,255,255,0.7);
+  font-weight: 800; /* Зробив більш помітним */
+  margin-bottom: 35px; /* Збільшив відступ */
+  font-size: 2.4rem;
+  color: var(--color-text-main);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.7);
 }
 
-/* --- Price Block (unchanged) --- */
+/* --- Price Block (Блок знижки - конверсійний) --- */
 .price-block{
-  background: linear-gradient(135deg, var(--color-promo-bg-start), var(--color-promo-bg-end));
-  border-radius: 24px;
-  padding: 30px 20px;
-  box-shadow: 0 8px 25px rgba(0, 122, 255, 0.12);
-  border: 1px solid #a8c4ff;
-  max-width: 450px;
-  margin: 0 auto 25px auto;
+  background: linear-gradient(135deg, var(--color-promo-bg-start), var(--color-promo-bg-end));
+  border-radius: 24px;
+  padding: 30px 20px;
+  box-shadow: 0 8px 25px rgba(0, 122, 255, 0.12);
+  border: 1px solid #a8c4ff;
+  max-width: 450px;
+  margin: 0 auto 40px auto; /* Збільшив нижній відступ */
 }
-.price-label { font-size: 1rem; font-weight: 700; margin-bottom: 15px; }
+.price-label { font-size: 1.1rem; font-weight: 800; margin-bottom: 15px; color: var(--color-accent-blue); }
 .price-old-details { display:flex; justify-content:center; align-items:center; gap:15px; margin-bottom:10px; }
 .discount-badge { background-color: var(--color-discount-badge); color:#fff; font-weight:700; padding:5px 12px; border-radius:12px; font-size:1rem; box-shadow:0 3px 6px rgba(255,59,48,0.3); }
 .original-price-info { font-size:1rem; color:#6e6e73; }
@@ -86,211 +84,231 @@ h1{
 .discount-note { font-size:1rem; color:var(--color-text-main); font-weight:600; margin-top:15px; padding-top:15px; border-top:1px dashed #c8c8d3; margin-bottom:0; }
 .discount-note strong { color: var(--color-accent-blue); }
 
-/* --- Card Promo Block (обновлённый) --- */
-.card-promo-block{
-  background: linear-gradient(135deg, var(--color-promo-bg-start), var(--color-promo-bg-end));
-  border-radius: 20px;
-  padding: 24px;
-  margin-bottom: 30px;
-  box-shadow: 0 8px 25px rgba(0,122,255,0.15);
-  text-align: center;
-  border: 1px solid var(--color-accent-blue);
+
+/* --- Card Action Block (Головний блок дії - новий, менш яскравий) --- */
+.card-action-block{
+  border-radius: 20px;
+  padding: 0; /* Прибрав основний паддінг, щоб картка була "ближче" до краю */
+  margin-bottom: 30px;
+  text-align: center;
+  max-width: 480px; /* Збільшив max-width для цього блоку */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* --- Визуальная карта (новый стиль для поля номера) --- */
 .card-visual{
-  --card-w: 420px;
-  max-width: var(--card-w);
-  margin: 0 auto;
-  background: linear-gradient(135deg,#0f4b8a,#1ea6ff); /* стильная градиент-карта */
-  border-radius: 14px;
-  padding: 18px 18px 16px 18px;
-  color: #fff;
-  text-align: left;
-  box-shadow: 0 12px 30px rgba(16,94,255,0.18), 0 2px 6px rgba(0,0,0,0.12);
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.08);
+  --card-w: 420px;
+  max-width: var(--card-w);
+  margin: 0 auto;
+  background: linear-gradient(135deg,#0f4b8a,#1ea6ff); /* стильна градиент-карта */
+  border-radius: 14px;
+  padding: 18px 18px 16px 18px;
+  color: #fff;
+  text-align: left;
+  box-shadow: 0 12px 30px rgba(16,94,255,0.18), 0 2px 6px rgba(0,0,0,0.12);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 /* маленький чип */
 .card-chip{
-  width: 44px;
-  height: 30px;
-  border-radius: 4px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.75));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
-  margin-bottom: 12px;
+  width: 44px;
+  height: 30px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.75));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  margin-bottom: 12px;
 }
 
-/* бренд карты (можно заменить на svg/изображение) */
+/* бренд карты */
 .card-brand{
-  position: absolute;
-  right: 14px;
-  top: 14px;
-  font-weight: 700;
-  opacity: 0.95;
-  font-size: 0.95rem;
-  letter-spacing: 0.6px;
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  font-weight: 700;
+  opacity: 0.95;
+  font-size: 0.95rem;
+  letter-spacing: 0.6px;
 }
 
 /* Поле номера — оформлено как input */
 .card-number-input{
-  display: block;
-  width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: #fff;
-  font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
-  font-size: 1.6rem; /* крупнее для читаемости, похоже на карту */
-  font-weight: 700;
-  letter-spacing: 2px;
-  padding: 6px 0 10px 0;
-  caret-color: #ffe;
-}
-
-/* подпись под номером */
-.card-number-hint{
-  font-size: 0.85rem;
-  opacity: 0.9;
-  margin-top: 6px;
-  font-weight:600;
+  display: block;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+  font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 6px 0 10px 0;
+  caret-color: #ffe;
 }
 
 /* Когда поле пустое — показываем точки (placeholder стилизован) */
 .card-number-input::placeholder{
-  color: rgba(255,255,255,0.6);
-  font-weight:700;
+  color: rgba(255,255,255,0.6);
+  font-weight:700;
 }
 
-/* --- Остальной текст в блоке промо --- */
-.card-number-label { font-size: 0.9rem; color: var(--color-text-main); opacity: 0.7; margin-bottom: 8px; font-weight: 500; }
-.promo-info { font-size: 0.95rem; font-weight: 600; color: var(--color-text-main); padding: 8px 0; border-top: 1px dashed var(--color-border-light); margin-top: 15px; }
-.promo-info b { color: var(--color-accent-blue); }
+/* --- Інструкція до платежу (під карткою) --- */
+.payment-instruction-block {
+  background: var(--color-light-blue-bg); /* Блакитний фон для інструкції */
+  border-radius: 0 0 20px 20px;
+  border: 1px solid var(--color-border-light);
+  border-top: none;
+  padding: 18px 25px;
+  margin-top: -10px; /* Трохи накладається на картку */
+  position: relative;
+  z-index: 1;
+  text-align: left;
+}
+.payment-instruction-block p {
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.payment-instruction-block strong {
+  color: var(--color-price-final); /* Червоний акцент на сумі */
+}
+.promo-code-box {
+  display: inline-block;
+  background-color: #fff;
+  color: var(--color-accent-blue);
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--color-accent-blue);
+  margin-top: 10px;
+}
+
 
 /* --- Payment & Warning --- */
-.payment-text { font-size: 0.95rem; line-height: 1.6; text-align: left; margin-top: 20px; padding: 0 5px; }
+.payment-text { font-size: 0.95rem; line-height: 1.6; text-align: left; margin-top: 30px; padding: 0 5px; }
 .payment-text b { color: var(--color-accent-blue); }
 .warning-box { margin-top: 20px; padding: 15px; background-color: #fff8f8; border: 1px solid #ff9999; border-radius: 12px; font-size: 0.85rem; }
 .warning-box b { color: #cc3333; }
 
 /* --- Button --- */
 .btn-primary{
-  border-radius: 16px;
-  font-weight: 600;
-  background-color: var(--color-accent-blue);
-  border-color: var(--color-accent-blue);
-  padding: 14px 20px;
-  font-size: 1.05rem;
-  transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
-  box-shadow: 0 8px 20px rgba(0,122,255,0.3);
-  width: 100%;
+  border-radius: 16px;
+  font-weight: 700; /* Зробив жирнішим */
+  background-color: var(--color-accent-blue);
+  border-color: var(--color-accent-blue);
+  padding: 16px 20px; /* Збільшив вертикальний паддінг */
+  font-size: 1.1rem;
+  transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
+  box-shadow: 0 8px 20px rgba(0,122,255,0.3);
+  width: 100%;
 }
 .btn-primary:hover { background-color: #0066cc; border-color: #0066cc; box-shadow: 0 10px 25px rgba(0,122,255,0.4); transform: translateY(-1px); }
 .btn-primary:active { transform: translateY(1px); }
 
 /* --- Media Queries --- */
 @media (max-width: 767px){
-  .container{ width: 100%; padding: 20px; border-radius: 0; box-shadow: none; }
-  h1{ font-size: 32px; }
-  .card-visual{ --card-w: 100%; border-radius: 8px; padding: 14px; }
-  .card-number-input{ font-size: 1.35rem; letter-spacing: 1.4px; }
+  .container{ width: 100%; padding: 20px; border-radius: 0; box-shadow: none; }
+  h1{ font-size: 32px; }
+  .card-visual{ --card-w: 100%; border-radius: 8px; padding: 14px; }
+  .card-number-input{ font-size: 1.35rem; letter-spacing: 1.4px; }
+  .payment-instruction-block { border-radius: 0 0 15px 15px; }
 }
 @media (max-width: 576px){
-  .container{ width: 100%; padding: 15px; border-radius: 0; }
-  h1{ font-size: 34px; }
-  .card-number-input{ font-size: 1.4rem; }
+  .container{ width: 100%; padding: 15px; border-radius: 0; }
+  h1{ font-size: 30px; }
+  .card-number-input{ font-size: 1.4rem; }
 }
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>🎉 Бронювання підтверджено!</h1>
+  <h1>🎉 Бронювання підтверджено!</h1>
 
-  <div class="price-block">
-    <div class="price-label">Тільки для вас: Фінальна вартість консультації</div>
-    <div class="price-old-details">
-        <div class="discount-badge">-43%</div>
-        <div class="original-price-info">Звичайна ціна: <span class="price-old">1500 грн</span></div>
-    </div>
-    <div class="price-new-wrapper"><div class="price-new">850 грн</div></div>
-    <p class="discount-note">Застосовано <strong>персональну знижку</strong>, зафіксуйте ціну зараз!</p>
-  </div>
+    <div class="price-block">
+    <div class="price-label">Тільки для вас: Фінальна вартість консультації</div>
+    <div class="price-old-details">
+        <div class="discount-badge">-43%</div>
+        <div class="original-price-info">Звичайна ціна: <span class="price-old">1500 грн</span></div>
+    </div>
+    <div class="price-new-wrapper"><div class="price-new">850 грн</div></div>
+    <p class="discount-note">Застосовано <strong>персональну знижку</strong>, зафіксуйте ціну зараз!</p>
+  </div>
 
-  <div class="card-promo-block">
-    <div class="card-number-label">Здійсніть переказ на цей рахунок</div>
+    <div class="card-action-block">
+    <h2 class="h5 text-start mb-3" style="font-weight:700; padding-left:5px; color:var(--color-text-main);">1. Здійсніть переказ</h2>
 
-    <!-- Визуальная «карточка» с полем ввода номера -->
-    <div class="card-visual" role="group" aria-label="Номер картки">
-      <div class="card-brand">VISA</div>
-      <div class="card-chip" aria-hidden="true"></div>
+        <div class="card-visual" role="group" aria-label="Номер картки для оплати">
+      <div class="card-brand">VISA</div>
+      <div class="card-chip" aria-hidden="true"></div>
 
-      <!-- Используем input чтобы пользователь мог редактировать — стилизовано как на карте -->
-      <input
-        id="cardNumberInput"
-        class="card-number-input"
-        type="text"
-        inputmode="numeric"
-        maxlength="19"
-        placeholder="•••• •••• •••• ••••"
-        aria-label="Номер картки"
-        autocomplete="off"
-      />
+            <input
+        id="cardNumberInput"
+        class="card-number-input"
+        type="text"
+        inputmode="none"
+        maxlength="19"
+        value="4149 1234 5678 9012"
+        aria-label="Номер картки"
+        readonly
+      />
 
-      <div class="card-number-hint">Ваш <strong>персональний промокод</strong> для коментаря до платежу: <b>PROMO123</b></div>
-    </div>
+      <div class="card-number-hint">Натисніть на номер, щоб скопіювати.</div>
+    </div>
+    
+    <div class="payment-instruction-block">
+      <p>Перекажіть суму <strong>850 грн</strong> на вказану вище картку.</p>
+      <p><strong>ОБОВ'ЯЗКОВО:</strong> додайте у коментар до платежу ваш персональний промокод:</p>
+      <div class="promo-code-box" id="promoCodeBox">PROMO123</div>
+    </div>
+  </div>
 
-    <div class="promo-info">Після оплати додайте у коментар до платежу <b>PROMO123</b>, щоб активувати знижку.</div>
-  </div>
+  <div class="payment-text">
+    <h2 class="h5 text-start mb-3" style="font-weight:700; color:var(--color-text-main);">2. Завантажте квитанцію</h2>
+    <p><b>Наступний крок:</b> Для завершення бронювання вам необхідно здійснити оплату та <b>завантажити квитанцію</b>.</p>
+    <p>Після завантаження квитанції на ваш email надійде лист із посиланням на онлайн-консультацію та всією контактною інформацією.</p>
+    <div class="warning-box">
+      <b>⚠️ Умови скасування консультації:</b>
+      <p style="margin:5px 0;">Якщо ви скасовуєте консультацію за 24 години або раніше, вся оплачена сума повертається протягом 3-х банківських днів.</p>
+      <p style="margin:0;">Якщо скасування відбувається пізніше ніж за 24 години, або ви не з'являєтесь, або запізнюєтесь більше ніж на 15 хвилин, консультація вважається проведеною.</p>
+    </div>
+  </div>
 
-  <div class="payment-text">
-    <p><b>Наступний крок:</b> Для завершення бронювання вам необхідно здійснити оплату та <b>завантажити квитанцію</b>.</p>
-    <p>Після завантаження квитанції на ваш email надійде лист із посиланням на онлайн-консультацію та всією контактною інформацією.</p>
-    <div class="warning-box">
-      <b>⚠️ Умови скасування консультації:</b>
-      <p style="margin:5px 0;">Якщо ви скасовуєте консультацію за 24 години або раніше, вся оплачена сума повертається протягом 3-х банківських днів.</p>
-      <p style="margin:0;">Якщо скасування відбувається пізніше ніж за 24 години, або ви не з'являєтесь, або запізнюєтесь більше ніж на 15 хвилин, консультація вважається проведеною.</p>
-    </div>
-  </div>
-
-  <div class="mt-4">
-    <a href="#" class="btn btn-primary w-100" id="uploadReceiptBtn">Завантажити квитанцію про оплату</a>
-  </div>
+  <div class="mt-5">
+    <a href="#" class="btn btn-primary" id="uploadReceiptBtn">Завантажити квитанцію про оплату</a>
+  </div>
 </div>
 
 <script>
-/* Форматирование ввода номера карты: #### #### #### #### */
-const input = document.getElementById('cardNumberInput');
-
-// Если хотите подставить номер по умолчанию (например для демо), раскомментируйте:
-// const cardNumberRaw = "1234567890123456";
-// input.value = cardNumberRaw.replace(/(.{4})/g, "$1 ").trim();
-
-input.addEventListener('input', (e) => {
-  const cursorPos = input.selectionStart;
-  // оставляем только цифры
-  let digits = input.value.replace(/\D/g, '').slice(0,16); // максимум 16 цифр
-  // форматируем в группы по 4
-  let formatted = digits.replace(/(.{4})/g, '$1 ').trim();
-  input.value = formatted;
-  // стараемся корректно восстановить позицию курсора
-  // простой логикой: если ввод добавил пробел — сдвигаем курсор вперед
-  let newPos = cursorPos;
-  // корректировка: если на позиции перед вводом был пробел и сейчас нет — уменьшаем
-  // (упрощённая логика, работает корректно в большинстве случаев)
-  if (cursorPos && e.inputType !== 'deleteContentBackward') {
-    if ((formatted[cursorPos-1] === ' ' && input.value[cursorPos-1] === ' ') || (formatted[cursorPos-1] !== ' ')) {
-      newPos = input.value.length;
-    }
-  }
-  // устанавливаем позицию курсора максимально правую (удобно для телефона)
-  input.setSelectionRange(newPos, newPos);
+// Скрипт для копіювання номера картки
+const cardNumberInput = document.getElementById('cardNumberInput');
+cardNumberInput.addEventListener('click', (e) => {
+  // Для input з атрибутом readonly
+  cardNumberInput.select();
+  document.execCommand('copy');
+  alert("Номер картки скопійовано: " + cardNumberInput.value);
 });
 
+// Скрипт для копіювання промокоду
+const promoCodeBox = document.getElementById('promoCodeBox');
+promoCodeBox.addEventListener('click', (e) => {
+  navigator.clipboard.writeText(promoCodeBox.textContent.trim()).then(() => {
+    promoCodeBox.textContent = 'Скопійовано!';
+    setTimeout(() => { promoCodeBox.textContent = 'PROMO123'; }, 1000);
+  }, () => {
+    // Fallback для старих браузерів
+    alert("Промокод PROMO123 скопіюйте вручну.");
+  });
+});
+
+
+// Скрипт для кнопки завантаження
 document.getElementById("uploadReceiptBtn").addEventListener('click', (e)=>{
-  e.preventDefault();
-  alert("Тут можна додати логіку завантаження квитанції. Після успішного завантаження, на ваш email прийде лист із посиланням на консультацію.");
+  e.preventDefault();
+  alert("Тут можна додати логіку завантаження квитанції. Після успішного завантаження, на ваш email прийде лист із посиланням на консультацію.");
 });
 </script>
 </body>
