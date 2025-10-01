@@ -7,10 +7,8 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* --- Box-sizing --- */
 * { box-sizing: border-box; }
 
-/* --- CSS Variables --- */
 :root{
   --color-background-start: #ecedf3;
   --color-background-end: #d8d8e5;
@@ -56,7 +54,7 @@ body{
 /* --- Headers --- */
 h1{
   font-weight: 800;
-  margin-bottom: 35px;
+  margin-bottom: 40px;
   font-size: 2.4rem;
   color: var(--color-text-main);
   text-shadow: 0 1px 0 rgba(255,255,255,0.7);
@@ -66,34 +64,49 @@ h1{
 .price-block{
   background: linear-gradient(135deg, var(--color-promo-bg-start), var(--color-promo-bg-end));
   border-radius: 24px;
-  padding: 30px 20px;
+  padding: 35px 25px;
   box-shadow: 0 8px 25px rgba(0, 122, 255, 0.12);
   border: 1px solid #a8c4ff;
   max-width: 450px;
-  margin: 0 auto 40px auto;
+  margin: 0 auto 50px auto; /* увеличенное расстояние */
 }
-.price-label { font-size: 1.1rem; font-weight: 800; margin-bottom: 15px; color: var(--color-accent-blue); }
+.price-label { font-size: 1.2rem; font-weight: 800; margin-bottom: 15px; color: var(--color-accent-blue); }
 .price-old-details { display:flex; justify-content:center; align-items:center; gap:15px; margin-bottom:10px; }
-.discount-badge { background-color: var(--color-discount-badge); color:#fff; font-weight:700; padding:5px 12px; border-radius:12px; font-size:1rem; box-shadow:0 3px 6px rgba(255,59,48,0.3); }
+.discount-badge { background-color: var(--color-discount-badge); color:#fff; font-weight:700; padding:6px 14px; border-radius:14px; font-size:1rem; box-shadow:0 3px 6px rgba(255,59,48,0.3); }
 .original-price-info { font-size:1rem; color:#6e6e73; }
 .price-old { text-decoration: line-through; font-weight:600; font-size:1.4rem; }
 .price-new-wrapper { margin-top:15px; padding-bottom:10px; }
 .price-new { font-size:3.5rem; font-weight:900; color:var(--color-price-final); line-height:1; }
-.discount-note { font-size:1rem; color:var(--color-text-main); font-weight:600; margin-top:15px; padding-top:15px; border-top:1px dashed #c8c8d3; margin-bottom:0; }
+.discount-note { font-size:1rem; color:var(--color-text-main); font-weight:600; margin-top:20px; padding-top:15px; border-top:1px dashed #c8c8d3; margin-bottom:0; }
 .discount-note strong { color: var(--color-accent-blue); }
 
 /* --- Card Action Block --- */
 .card-action-block{
   border-radius: 20px;
   padding: 0;
-  margin-bottom: 30px;
+  margin-bottom: 60px; /* больше расстояние после блока */
   text-align: center;
+}
+
+/* --- Step number styles --- */
+.step-number{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-accent-blue);
+  color: #fff;
+  font-weight: 700;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+  font-size: 1rem;
 }
 
 /* --- Wrapper for visual card + instructions --- */
 .card-wrapper {
   max-width: 480px;
-  margin: 0 auto 30px auto;
+  margin: 0 auto 40px auto; /* увеличено расстояние */
 }
 
 /* --- Visual card --- */
@@ -117,16 +130,6 @@ h1{
   background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.75));
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
   margin-bottom: 12px;
-}
-
-.card-brand{
-  position: absolute;
-  right: 14px;
-  top: 14px;
-  font-weight: 700;
-  opacity: 0.95;
-  font-size: 0.95rem;
-  letter-spacing: 0.6px;
 }
 
 /* --- Card number input --- */
@@ -187,7 +190,7 @@ h1{
 }
 
 /* --- Payment & Warning --- */
-.payment-text { font-size: 0.95rem; line-height: 1.6; text-align: left; margin-top: 30px; padding: 0 5px; }
+.payment-text { font-size: 0.95rem; line-height: 1.6; text-align: left; margin-top: 40px; padding: 0 5px; }
 .payment-text b { color: var(--color-accent-blue); }
 .warning-box { margin-top: 20px; padding: 15px; background-color: #fff8f8; border: 1px solid #ff9999; border-radius: 12px; font-size: 0.85rem; }
 .warning-box b { color: #cc3333; }
@@ -237,11 +240,12 @@ h1{
   </div>
 
   <div class="card-action-block">
-    <h2 class="h5 text-start mb-3" style="font-weight:700; padding-left:5px; color:var(--color-text-main);">1. Здійсніть переказ</h2>
+    <h2 class="h5 text-start mb-3" style="font-weight:700; padding-left:5px; color:var(--color-text-main);">
+      <span class="step-number">1</span> Здійсніть переказ
+    </h2>
 
     <div class="card-wrapper">
       <div class="card-visual" role="group" aria-label="Номер картки для оплати">
-        <div class="card-brand">VISA</div>
         <div class="card-chip" aria-hidden="true"></div>
         <input
           id="cardNumberInput"
@@ -264,7 +268,9 @@ h1{
   </div>
 
   <div class="payment-text">
-    <h2 class="h5 text-start mb-3" style="font-weight:700; color:var(--color-text-main);">2. Завантажте квитанцію</h2>
+    <h2 class="h5 text-start mb-3" style="font-weight:700; color:var(--color-text-main);">
+      <span class="step-number">2</span> Завантажте квитанцію
+    </h2>
     <p><b>Наступний крок:</b> Для завершення бронювання вам необхідно здійснити оплату та <b>завантажити квитанцію</b>.</p>
     <p>Після завантаження квитанції на ваш email надійде лист із посиланням на онлайн-консультацію та всією контактною інформацією.</p>
     <div class="warning-box">
