@@ -37,6 +37,8 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden;
 }
 
 /* --- Container --- */
@@ -223,6 +225,17 @@ h1{
   h1{ font-size: 30px; }
   .card-number-input{ font-size: 1.4rem; }
 }
+
+/* --- Fireworks canvas overlay --- */
+#fireworks-canvas {
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
 </style>
 </head>
 <body>
@@ -285,86 +298,51 @@ h1{
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<canvas id="fireworks-canvas"></canvas>
 
-<script>
-/**
- * Функція для запуску анімації феєрверку
- * @param {number} particleCount - кількість частинок
- * @param {number} scalar - коефіцієнт розміру частинок (менше число = менше частинок)
- * @param {object} origin - точка початку
- */
-function launchConfetti(particleCount, scalar, origin) {
-  const defaults = {
-    spread: 360,
-    ticks: 50,
-    gravity: 0,
-    decay: 0.94,
-    startVelocity: 30,
-    colors: ['#007aff', '#ff3b30', '#c70039', '#ffcc00', '#ffffff']
-  };
-
-  confetti({
-    ...defaults,
-    particleCount: particleCount,
-    scalar: scalar, // Використовуємо 0.8 для дрібного конфетті
-    origin: origin
-  });
-}
-
-/**
- * Основний запуск феєрверку з дрібним конфетті
- */
-function fireSmallConfetti() {
-  // Вибух 1: Зверху вліво (дрібне конфетті)
-  launchConfetti(80, 0.8, { x: 0.2, y: 0.3 }); 
-  
-  // Вибух 2: Зверху справа (дрібне конфетті)
-  launchConfetti(80, 0.8, { x: 0.8, y: 0.3 }); 
-
-  // Додатковий невеликий вибух по центру (трохи більші частинки для різноманітності)
-  setTimeout(() => {
-    launchConfetti(100, 1, { x: 0.5, y: 0.5 });
-  }, 100);
-}
-
-// 1. Анімація при завантаженні сторінки (через 0.5 секунди)
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(fireSmallConfetti, 500); 
+<script type="module">
+// Fireworks JS
+import { Fireworks } from 'https://cdn.jsdelivr.net/npm/fireworks-js@2/dist/fireworks.esm.js';
+const container = document.getElementById('fireworks-canvas');
+const fireworks = new Fireworks(container, {
+  rocketsPoint: { min: 0, max: 100 },
+  hue: { min: 0, max: 360 },
+  speed: 3,
+  acceleration: 1.05,
+  friction: 0.95,
+  gravity: 1.5,
+  particles: 50,
+  trace: 3,
+  explosion: 5,
+  autoresize: true,
+  brightness: { min: 50, max: 80 },
+  decay: 0.015
 });
+fireworks.start();
+setTimeout(() => fireworks.stop(), 5000);
 
-// 2. Копіювання номера карти
+// Копирование номера карты
 const cardNumberInput = document.getElementById('cardNumberInput');
 cardNumberInput.addEventListener('click', () => {
   cardNumberInput.select();
-  navigator.clipboard.writeText(cardNumberInput.value).then(() => {
-      alert("Номер картки скопійовано: " + cardNumberInput.value);
-  }).catch(err => {
-      // Fallback
-      document.execCommand('copy');
-      alert("Номер картки скопійовано: " + cardNumberInput.value);
-  });
+  document.execCommand('copy');
+  alert("Номер картки скопійовано: " + cardNumberInput.value);
 });
 
-// 3. Копіювання промокоду
+// Копирование промокода
 const promoCodeBox = document.getElementById('promoCodeBox');
 promoCodeBox.addEventListener('click', () => {
   navigator.clipboard.writeText(promoCodeBox.textContent.trim()).then(() => {
     promoCodeBox.textContent = 'Скопійовано!';
-    promoCodeBox.setAttribute('aria-pressed', 'true');
-    setTimeout(() => { 
-        promoCodeBox.textContent = 'PROMO123';
-        promoCodeBox.setAttribute('aria-pressed', 'false');
-    }, 1000);
+    setTimeout(() => { promoCodeBox.textContent = 'PROMO123'; }, 1000);
   }, () => {
     alert("Промокод PROMO123 скопіюйте вручну.");
   });
 });
 
-// 4. Кнопка загрузки квитанции + повтор феєрверку
+// Кнопка загрузки квитанции
 document.getElementById("uploadReceiptBtn").addEventListener('click', (e)=>{
   e.preventDefault();
-  fireSmallConfetti(); // Запуск дрібного феєрверку при натисканні
   alert("Тут можна додати логіку завантаження квитанції. Після успішного завантаження, на ваш email прийде лист із посиланням на консультацію.");
 });
 </script>
