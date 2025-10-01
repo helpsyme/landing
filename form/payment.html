@@ -43,7 +43,7 @@ body{
 
 /* --- Container --- */
 .container{
-  max-width: 720px; /* уменьшил слегка для десктопа */
+  max-width: 720px;
   width: 90%;
   background: var(--color-card-bg);
   border-radius: 28px;
@@ -88,19 +88,18 @@ h1{
   padding: 0;
   margin-bottom: 30px;
   text-align: center;
+}
+
+/* --- Wrapper for visual card + instructions --- */
+.card-wrapper {
   max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto 30px auto;
 }
 
 /* --- Visual card --- */
 .card-visual{
-  --card-w: 420px;
-  width: 100%;
-  max-width: var(--card-w);
-  margin: 0 auto;
   background: linear-gradient(135deg,#0f4b8a,#1ea6ff);
-  border-radius: 14px 14px 0 0; /* верхние скругления */
+  border-radius: 14px 14px 0 0;
   padding: 18px;
   color: #fff;
   text-align: left;
@@ -108,9 +107,9 @@ h1{
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 0;
 }
 
-/* chip and brand */
 .card-chip{
   width: 44px;
   height: 30px;
@@ -119,6 +118,7 @@ h1{
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
   margin-bottom: 12px;
 }
+
 .card-brand{
   position: absolute;
   right: 14px;
@@ -129,7 +129,7 @@ h1{
   letter-spacing: 0.6px;
 }
 
-/* card number input (readonly) */
+/* --- Card number input --- */
 .card-number-input{
   display: block;
   width: 100%;
@@ -143,11 +143,10 @@ h1{
   letter-spacing: 2px;
   padding: 6px 0 10px 0;
   caret-color: #ffe;
-  cursor: pointer; /* явный подсказчик что можно кликнуть */
+  cursor: pointer;
   user-select: none;
 }
 
-/* hint under number */
 .card-number-hint{
   font-size: 0.85rem;
   opacity: 0.95;
@@ -156,18 +155,14 @@ h1{
   color: rgba(255,255,255,0.9);
 }
 
-/* instruction block under card (перенесено внизу, скругление внизу) */
+/* --- Instruction block --- */
 .payment-instruction-block {
   background: var(--color-light-blue-bg);
-  border-radius: 0 0 14px 14px; /* совпадает с card-visual */
+  border-radius: 0 0 14px 14px;
   border: 1px solid var(--color-border-light);
-  border-top: none; /* чтобы не было двойной линии */
+  border-top: none;
   padding: 18px 20px;
   margin-top: 0;
-  /* вместо margin-top: -10px используем translate чтобы избежать проблем с бордерами */
-  transform: translateY(-10px);
-  position: relative;
-  z-index: 2;
   text-align: left;
 }
 .payment-instruction-block p {
@@ -216,9 +211,9 @@ h1{
 @media (max-width: 767px){
   .container{ width: 100%; padding: 20px; border-radius: 0; box-shadow: none; }
   h1{ font-size: 32px; }
-  .card-visual{ --card-w: 100%; border-radius: 8px 8px 0 0; padding: 14px; }
+  .card-visual{ border-radius: 8px 8px 0 0; padding: 14px; }
   .card-number-input{ font-size: 1.35rem; letter-spacing: 1.4px; }
-  .payment-instruction-block { border-radius: 0 0 12px 12px; transform: translateY(-8px); }
+  .payment-instruction-block { border-radius: 0 0 12px 12px; }
 }
 @media (max-width: 576px){
   .container{ width: 100%; padding: 15px; border-radius: 0; }
@@ -244,29 +239,27 @@ h1{
   <div class="card-action-block">
     <h2 class="h5 text-start mb-3" style="font-weight:700; padding-left:5px; color:var(--color-text-main);">1. Здійсніть переказ</h2>
 
-    <div class="card-visual" role="group" aria-label="Номер картки для оплати">
-      <div class="card-brand">VISA</div>
-      <div class="card-chip" aria-hidden="true"></div>
+    <div class="card-wrapper">
+      <div class="card-visual" role="group" aria-label="Номер картки для оплати">
+        <div class="card-brand">VISA</div>
+        <div class="card-chip" aria-hidden="true"></div>
+        <input
+          id="cardNumberInput"
+          class="card-number-input"
+          type="text"
+          maxlength="19"
+          value="4149 1234 5678 9012"
+          aria-label="Номер картки"
+          readonly
+        />
+        <div class="card-number-hint" id="cardHint">Натисніть на номер, щоб скопіювати.</div>
+      </div>
 
-      <input
-        id="cardNumberInput"
-        class="card-number-input"
-        type="text"
-        maxlength="19"
-        value="4149 1234 5678 9012"
-        aria-label="Номер картки"
-        readonly
-        aria-readonly="true"
-        tabindex="0"
-      />
-
-      <div class="card-number-hint" id="cardHint">Натисніть на номер, щоб скопіювати.</div>
-    </div>
-
-    <div class="payment-instruction-block">
-      <p>Перекажіть суму <strong>850 грн</strong> на вказану вище картку.</p>
-      <p><strong>ОБОВ'ЯЗКОВО:</strong> додайте у коментар до платежу ваш персональний промокод:</p>
-      <div class="promo-code-box" id="promoCodeBox" role="button" aria-pressed="false">PROMO123</div>
+      <div class="payment-instruction-block">
+        <p>Перекажіть суму <strong>850 грн</strong> на вказану вище картку.</p>
+        <p><strong>ОБОВ'ЯЗКОВО:</strong> додайте у коментар до платежу ваш персональний промокод:</p>
+        <div class="promo-code-box" id="promoCodeBox" role="button" aria-pressed="false">PROMO123</div>
+      </div>
     </div>
   </div>
 
@@ -287,55 +280,26 @@ h1{
 </div>
 
 <script>
-/* Копирование номера карты — использую современный clipboard API + fallback */
+// Копирование номера карты
 const cardNumberInput = document.getElementById('cardNumberInput');
-const cardHint = document.getElementById('cardHint');
-
-async function copyText(text) {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    return navigator.clipboard.writeText(text);
-  }
-  // fallback для старых браузеров
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.position = 'fixed';
-  ta.style.left = '-9999px';
-  document.body.appendChild(ta);
-  ta.select();
-  try {
-    document.execCommand('copy');
-  } finally {
-    document.body.removeChild(ta);
-  }
-}
-
-cardNumberInput.addEventListener('click', async () => {
-  const text = cardNumberInput.value.trim();
-  try {
-    await copyText(text);
-    const prev = cardHint.textContent;
-    cardHint.textContent = 'Скопійовано!';
-    setTimeout(() => { cardHint.textContent = prev; }, 1200);
-  } catch (err) {
-    alert('Не вдалося скопіювати. Скопіюйте номер вручну: ' + text);
-  }
+cardNumberInput.addEventListener('click', () => {
+  cardNumberInput.select();
+  document.execCommand('copy');
+  alert("Номер картки скопійовано: " + cardNumberInput.value);
 });
 
-/* Копирование промокода */
+// Копирование промокода
 const promoCodeBox = document.getElementById('promoCodeBox');
-promoCodeBox.addEventListener('click', async () => {
-  const code = promoCodeBox.textContent.trim();
-  try {
-    await copyText(code);
-    const prev = promoCodeBox.textContent;
+promoCodeBox.addEventListener('click', () => {
+  navigator.clipboard.writeText(promoCodeBox.textContent.trim()).then(() => {
     promoCodeBox.textContent = 'Скопійовано!';
-    setTimeout(() => { promoCodeBox.textContent = prev; }, 1000);
-  } catch {
-    alert('Промокод: ' + code);
-  }
+    setTimeout(() => { promoCodeBox.textContent = 'PROMO123'; }, 1000);
+  }, () => {
+    alert("Промокод PROMO123 скопіюйте вручну.");
+  });
 });
 
-/* Кнопка загрузки — пока placeholder */
+// Кнопка загрузки квитанции
 document.getElementById("uploadReceiptBtn").addEventListener('click', (e)=>{
   e.preventDefault();
   alert("Тут можна додати логіку завантаження квитанції. Після успішного завантаження, на ваш email прийде лист із посиланням на консультацію.");
