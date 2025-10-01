@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Дякуємо за бронювання - Оплата</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Space Mono для цифр на карте и Inter для общего текста -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* --- Box-sizing --- */
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 /* --- CSS Variables --- */
-:root {
-  --color-background-start: #ecedf3; 
-  --color-background-end: #d8d8e5;   
+:root{
+  --color-background-start: #ecedf3;
+  --color-background-end: #d8d8e5;
   --color-card-bg: #ffffff;
   --color-text-main: #1c1c1e;
   --color-accent-blue: #007aff;
@@ -25,14 +25,16 @@
   --color-shadow: rgba(0,0,0,0.08);
   --color-price-final: #c70039;
   --color-discount-badge: #ff3b30;
+  --card-gradient-start: linear-gradient(135deg,#2b6df6,#1fb7ff);
+  --card-gradient-soft: linear-gradient(135deg,#2d66f5,#66c1ff);
 }
 
 /* --- Global Styles --- */
-body {
-  background: 
+body{
+  background:
     repeating-linear-gradient(-45deg, rgba(0,0,0,0.05), rgba(0,0,0,0.05) 1px, transparent 1px, transparent 20px),
     linear-gradient(150deg, var(--color-background-start) 0%, var(--color-background-end) 100%);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   color: var(--color-text-main);
   line-height: 1.6;
   padding: 40px 20px;
@@ -43,8 +45,9 @@ body {
 }
 
 /* --- Container --- */
-.container {
-  max-width: 900px;
+.container{
+  /* уменьшил max-width для десктопа — более компактный вид */
+  max-width: 740px; /* раньше 900px */
   width: 90%;
   background: var(--color-card-bg);
   border-radius: 28px;
@@ -55,7 +58,7 @@ body {
 }
 
 /* --- Headers --- */
-h1 {
+h1{
   font-weight: 700;
   margin-bottom: 30px;
   font-size: 2.2rem;
@@ -63,40 +66,106 @@ h1 {
   text-shadow: 0 1px 0 rgba(255,255,255,0.7);
 }
 
-/* --- Price Block --- */
-.price-block {
-    background: linear-gradient(135deg, var(--color-promo-bg-start), var(--color-promo-bg-end));
-    border-radius: 24px;
-    padding: 30px 20px;
-    box-shadow: 0 8px 25px rgba(0, 122, 255, 0.12);
-    border: 1px solid #a8c4ff;
-    max-width: 450px; 
-    margin: 0 auto 25px auto;
+/* --- Price Block (unchanged) --- */
+.price-block{
+  background: linear-gradient(135deg, var(--color-promo-bg-start), var(--color-promo-bg-end));
+  border-radius: 24px;
+  padding: 30px 20px;
+  box-shadow: 0 8px 25px rgba(0, 122, 255, 0.12);
+  border: 1px solid #a8c4ff;
+  max-width: 450px;
+  margin: 0 auto 25px auto;
 }
-
 .price-label { font-size: 1rem; font-weight: 700; margin-bottom: 15px; }
-.price-old-details { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 10px; }
-.discount-badge { background-color: var(--color-discount-badge); color: #fff; font-weight: 700; padding: 5px 12px; border-radius: 12px; font-size: 1rem; box-shadow: 0 3px 6px rgba(255,59,48,0.3);}
-.original-price-info { font-size: 1rem; color: #6e6e73; }
-.price-old { text-decoration: line-through; font-weight: 600; font-size: 1.4rem; }
-.price-new-wrapper { margin-top: 15px; padding-bottom: 10px; }
-.price-new { font-size: 3.5rem; font-weight: 900; color: var(--color-price-final); line-height: 1; }
-.discount-note { font-size: 1rem; color: var(--color-text-main); font-weight: 600; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #c8c8d3; margin-bottom: 0;}
+.price-old-details { display:flex; justify-content:center; align-items:center; gap:15px; margin-bottom:10px; }
+.discount-badge { background-color: var(--color-discount-badge); color:#fff; font-weight:700; padding:5px 12px; border-radius:12px; font-size:1rem; box-shadow:0 3px 6px rgba(255,59,48,0.3); }
+.original-price-info { font-size:1rem; color:#6e6e73; }
+.price-old { text-decoration: line-through; font-weight:600; font-size:1.4rem; }
+.price-new-wrapper { margin-top:15px; padding-bottom:10px; }
+.price-new { font-size:3.5rem; font-weight:900; color:var(--color-price-final); line-height:1; }
+.discount-note { font-size:1rem; color:var(--color-text-main); font-weight:600; margin-top:15px; padding-top:15px; border-top:1px dashed #c8c8d3; margin-bottom:0; }
 .discount-note strong { color: var(--color-accent-blue); }
 
-/* --- Card Promo Block --- */
-.card-promo-block {
+/* --- Card Promo Block (обновлённый) --- */
+.card-promo-block{
   background: linear-gradient(135deg, var(--color-promo-bg-start), var(--color-promo-bg-end));
   border-radius: 20px;
-  padding: 30px;
+  padding: 24px;
   margin-bottom: 30px;
   box-shadow: 0 8px 25px rgba(0,122,255,0.15);
   text-align: center;
   border: 1px solid var(--color-accent-blue);
 }
 
+/* --- Визуальная карта (новый стиль для поля номера) --- */
+.card-visual{
+  --card-w: 420px;
+  max-width: var(--card-w);
+  margin: 0 auto;
+  background: linear-gradient(135deg,#0f4b8a,#1ea6ff); /* стильная градиент-карта */
+  border-radius: 14px;
+  padding: 18px 18px 16px 18px;
+  color: #fff;
+  text-align: left;
+  box-shadow: 0 12px 30px rgba(16,94,255,0.18), 0 2px 6px rgba(0,0,0,0.12);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* маленький чип */
+.card-chip{
+  width: 44px;
+  height: 30px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.75));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  margin-bottom: 12px;
+}
+
+/* бренд карты (можно заменить на svg/изображение) */
+.card-brand{
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  font-weight: 700;
+  opacity: 0.95;
+  font-size: 0.95rem;
+  letter-spacing: 0.6px;
+}
+
+/* Поле номера — оформлено как input */
+.card-number-input{
+  display: block;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+  font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size: 1.6rem; /* крупнее для читаемости, похоже на карту */
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 6px 0 10px 0;
+  caret-color: #ffe;
+}
+
+/* подпись под номером */
+.card-number-hint{
+  font-size: 0.85rem;
+  opacity: 0.9;
+  margin-top: 6px;
+  font-weight:600;
+}
+
+/* Когда поле пустое — показываем точки (placeholder стилизован) */
+.card-number-input::placeholder{
+  color: rgba(255,255,255,0.6);
+  font-weight:700;
+}
+
+/* --- Остальной текст в блоке промо --- */
 .card-number-label { font-size: 0.9rem; color: var(--color-text-main); opacity: 0.7; margin-bottom: 8px; font-weight: 500; }
-.card-number-text { font-size: 2.2rem; font-weight: 700; color: var(--color-accent-blue); margin-bottom: 15px; letter-spacing: 2px; font-family: 'SF Mono', 'Roboto Mono', monospace; }
 .promo-info { font-size: 0.95rem; font-weight: 600; color: var(--color-text-main); padding: 8px 0; border-top: 1px dashed var(--color-border-light); margin-top: 15px; }
 .promo-info b { color: var(--color-accent-blue); }
 
@@ -107,7 +176,7 @@ h1 {
 .warning-box b { color: #cc3333; }
 
 /* --- Button --- */
-.btn-primary {
+.btn-primary{
   border-radius: 16px;
   font-weight: 600;
   background-color: var(--color-accent-blue);
@@ -118,32 +187,20 @@ h1 {
   box-shadow: 0 8px 20px rgba(0,122,255,0.3);
   width: 100%;
 }
-.btn-primary:hover { background-color: #0066cc; border-color: #0066cc; box-shadow: 0 10px 25px rgba(0,122,255,0.4); transform: translateY(-1px);}
+.btn-primary:hover { background-color: #0066cc; border-color: #0066cc; box-shadow: 0 10px 25px rgba(0,122,255,0.4); transform: translateY(-1px); }
 .btn-primary:active { transform: translateY(1px); }
 
 /* --- Media Queries --- */
-@media (max-width: 767px) {
-  .container { width: 100%; padding: 20px; border-radius: 0; box-shadow: none; }
-  h1 { font-size: 32px; }
-  .price-label, .discount-badge, .discount-note { font-size: 19px; }
-  .original-price-info { font-size: 17px; }
-  .price-old { font-size: 24px; }
-  .price-new { font-size: 42px; }
-  .card-number-text { font-size: 28px; letter-spacing: 1px; }
-  .promo-info, .payment-text, .warning-box { font-size: 18px; }
-  .btn-primary { font-size: 20px; padding: 16px 20px; }
+@media (max-width: 767px){
+  .container{ width: 100%; padding: 20px; border-radius: 0; box-shadow: none; }
+  h1{ font-size: 32px; }
+  .card-visual{ --card-w: 100%; border-radius: 8px; padding: 14px; }
+  .card-number-input{ font-size: 1.35rem; letter-spacing: 1.4px; }
 }
-
-@media (max-width: 576px) {
-  .container { width: 100%; padding: 15px; border-radius: 0; }
-  h1 { font-size: 34px; }
-  .price-label, .discount-badge, .discount-note { font-size: 20px; }
-  .original-price-info { font-size: 18px; }
-  .price-old { font-size: 25px; }
-  .price-new { font-size: 44px; }
-  .card-number-text { font-size: 30px; }
-  .promo-info, .payment-text, .warning-box { font-size: 19px; }
-  .btn-primary { font-size: 21px; padding: 18px 20px; }
+@media (max-width: 576px){
+  .container{ width: 100%; padding: 15px; border-radius: 0; }
+  h1{ font-size: 34px; }
+  .card-number-input{ font-size: 1.4rem; }
 }
 </style>
 </head>
@@ -163,8 +220,28 @@ h1 {
 
   <div class="card-promo-block">
     <div class="card-number-label">Здійсніть переказ на цей рахунок</div>
-    <div class="card-number-text" id="cardNumber">•••• •••• •••• ••••</div>
-    <div class="promo-info">Ваш <strong>персональний промокод</strong> для коментаря до платежу: <b>PROMO123</b></div>
+
+    <!-- Визуальная «карточка» с полем ввода номера -->
+    <div class="card-visual" role="group" aria-label="Номер картки">
+      <div class="card-brand">VISA</div>
+      <div class="card-chip" aria-hidden="true"></div>
+
+      <!-- Используем input чтобы пользователь мог редактировать — стилизовано как на карте -->
+      <input
+        id="cardNumberInput"
+        class="card-number-input"
+        type="text"
+        inputmode="numeric"
+        maxlength="19"
+        placeholder="•••• •••• •••• ••••"
+        aria-label="Номер картки"
+        autocomplete="off"
+      />
+
+      <div class="card-number-hint">Ваш <strong>персональний промокод</strong> для коментаря до платежу: <b>PROMO123</b></div>
+    </div>
+
+    <div class="promo-info">Після оплати додайте у коментар до платежу <b>PROMO123</b>, щоб активувати знижку.</div>
   </div>
 
   <div class="payment-text">
@@ -183,15 +260,38 @@ h1 {
 </div>
 
 <script>
-const cardNumberRaw = "1234567890123456";
-const cardNumberFormatted = cardNumberRaw.replace(/(.{4})/g, "$1 ").trim();
-document.getElementById("cardNumber").innerText = cardNumberFormatted;
+/* Форматирование ввода номера карты: #### #### #### #### */
+const input = document.getElementById('cardNumberInput');
+
+// Если хотите подставить номер по умолчанию (например для демо), раскомментируйте:
+// const cardNumberRaw = "1234567890123456";
+// input.value = cardNumberRaw.replace(/(.{4})/g, "$1 ").trim();
+
+input.addEventListener('input', (e) => {
+  const cursorPos = input.selectionStart;
+  // оставляем только цифры
+  let digits = input.value.replace(/\D/g, '').slice(0,16); // максимум 16 цифр
+  // форматируем в группы по 4
+  let formatted = digits.replace(/(.{4})/g, '$1 ').trim();
+  input.value = formatted;
+  // стараемся корректно восстановить позицию курсора
+  // простой логикой: если ввод добавил пробел — сдвигаем курсор вперед
+  let newPos = cursorPos;
+  // корректировка: если на позиции перед вводом был пробел и сейчас нет — уменьшаем
+  // (упрощённая логика, работает корректно в большинстве случаев)
+  if (cursorPos && e.inputType !== 'deleteContentBackward') {
+    if ((formatted[cursorPos-1] === ' ' && input.value[cursorPos-1] === ' ') || (formatted[cursorPos-1] !== ' ')) {
+      newPos = input.value.length;
+    }
+  }
+  // устанавливаем позицию курсора максимально правую (удобно для телефона)
+  input.setSelectionRange(newPos, newPos);
+});
 
 document.getElementById("uploadReceiptBtn").addEventListener('click', (e)=>{
   e.preventDefault();
   alert("Тут можна додати логіку завантаження квитанції. Після успішного завантаження, на ваш email прийде лист із посиланням на консультацію.");
 });
-
 </script>
 </body>
 </html>
