@@ -3,42 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <title>Персональна пропозиція та Запис</title>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+
 <style>
-  /* --- Apple-Inspired & Harmonious Palette --- */
   :root {
-    /* Основні кольори */
     --color-background-start: #ecedf3; 
     --color-background-end: #d8d8e5;   
     --color-card: #ffffff;
     --color-text-main: #2c2c2e;
     --color-text-subtle: #8e8e93; 
-    
-    /* Акцентний колір (Єдиний, Приглушений синій) */
     --color-accent-blue: #007aff; 
-    
-    /* Кольори станів */
     --color-focus-shadow: rgba(0, 122, 255, 0.2); 
     --color-success: #34c759;
     --color-border-light: #c8c8d3;
     --color-shadow: rgba(0, 0, 0, 0.08);
-    
-    /* Змінні для кнопок вибору */
     --color-button-inactive: #f7f7f9;
     --color-button-inactive-border: #e0e0e5;
-
-    /* Змінні для стильного блоку ціни */
     --color-price-gradient-start: #e1e9ff; 
     --color-price-gradient-end: #f5f8ff;   
     --color-price-old-subtle: #9999a0;
     --color-price-new-bold: #c70039; 
-
-    /* Додаємо нову змінну для тіні блоку ціни */
     --color-price-block-shadow: rgba(0, 122, 255, 0.25); 
   }
 
   body {
-    /* Посилений Сірий градієнтний фон з більш видимим візерунком */
     background: 
       repeating-linear-gradient(
         -45deg,
@@ -52,21 +42,14 @@
         var(--color-background-start) 0%, 
         var(--color-background-end) 100%
       );
-
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
     color: var(--color-text-main);
     line-height: 1.6;
     padding: 30px;
   }
   
-  a {
-    text-decoration: none;
-    color: var(--color-accent-blue);
-  }
-
   .container { max-width: 600px; padding-top: 20px; padding-bottom: 20px; }
 
-  /* --- 1. Єдиний стиль заголовків (H1) --- */
   h1 {
     font-weight: 700;
     color: var(--color-text-main);
@@ -76,12 +59,7 @@
     text-shadow: 0 1px 0 rgba(255,255,255,0.7); 
   }
 
-  label {
-    font-weight: 600;
-    color: var(--color-text-main);
-    margin-bottom: 6px;
-    font-size: 0.95rem;
-  }
+  label { font-weight: 600; color: var(--color-text-main); margin-bottom: 6px; font-size: 0.95rem; }
 
   form {
     background-color: var(--color-card);
@@ -91,174 +69,52 @@
     border: 1px solid var(--color-border-light); 
   }
 
-  /* --- Doctor Card --- */
-    .doctor-card { text-align: center; margin-bottom: 30px; }
-    .doctor-card img {
-      width: 140px; 
-      height: 140px; 
-      object-fit: cover; 
-      border-radius: 50%; 
-      margin-bottom: 15px;
-      border: 4px solid var(--color-accent-blue);
-      box-shadow: 0 4px 10px var(--color-shadow);
-    }
+  .doctor-card { text-align: center; margin-bottom: 30px; }
+  .doctor-card img {
+    width: 140px; height: 140px; object-fit: cover; border-radius: 50%; margin-bottom: 15px;
+    border: 4px solid var(--color-accent-blue); box-shadow: 0 4px 10px var(--color-shadow);
+  }
   .form-control[disabled] {
-    background-color: transparent;
-    color: var(--color-text-main);
-    font-weight: 700;
-    border: none;
-    text-align: center;
-    padding: 0;
-    font-size: 1.2rem;
+    background-color: transparent; color: var(--color-text-main); font-weight: 700; border: none;
+    text-align: center; padding: 0; font-size: 1.2rem;
   }
 
-  /* --- 2. Дуже стильний, ВИДІЛЕНИЙ блок ціни (Price Block) --- */
   .price-block {
     background: linear-gradient(135deg, var(--color-price-gradient-start), var(--color-price-gradient-end)); 
-    border-radius: 28px; 
-    padding: 35px 30px; 
-    margin-bottom: 40px; 
-    box-shadow: 0 15px 35px var(--color-price-block-shadow); 
-    border: 1px solid #a8c4ff; 
-    transform: translateY(0); 
-    transition: all 0.3s ease-in-out; 
+    border-radius: 28px; padding: 35px 30px; margin-bottom: 40px; 
+    box-shadow: 0 15px 35px var(--color-price-block-shadow); border: 1px solid #a8c4ff;
+    transition: all 0.3s ease-in-out;
   }
+  .price-block .price-label { font-size: 0.95rem; color: var(--color-accent-blue); font-weight: 800; text-transform: uppercase; letter-spacing:1px; margin-bottom:18px;}
+  .price-block .price-wrapper { display:flex; justify-content:center; align-items:flex-end; margin-bottom:20px; }
+  .price-block .price-old { text-decoration: line-through; color: var(--color-price-old-subtle); font-size:1.5rem; margin-right:25px; }
+  .price-block .price-new { font-weight:900; color: var(--color-price-new-bold); font-size:3.5rem; line-height:1; }
+  .price-block .promo-info { margin-top:20px; padding-top:18px; border-top:1px dashed #b0c2e3; font-size:1rem; color:var(--color-text-subtle); }
+  .price-block .promo-info span { font-weight:700; color:var(--color-text-main); }
 
-  .price-block:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 20px 45px rgba(0, 122, 255, 0.35); 
-  }
+  .form-control { border-radius: 12px; border: 1px solid var(--color-border-light); padding:12px 18px; font-size:1rem; background-color:var(--color-button-inactive); }
+  .form-control:focus { border-color:var(--color-accent-blue); box-shadow: 0 0 0 3px var(--color-focus-shadow); background-color:var(--color-card); }
 
-  .price-block .price-label {
-    font-size: 0.95rem; 
-    color: var(--color-accent-blue); 
-    font-weight: 800; 
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
-    margin-bottom: 18px; 
-    display: block;
-  }
-
-  .price-block .price-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end; 
-    margin-bottom: 20px; 
-  }
-
-  .price-block .price-old {
-    text-decoration: line-through;
-    color: var(--color-price-old-subtle); 
-    font-size: 1.5rem; 
-    font-weight: 600; 
-    margin-right: 25px; 
-  }
-
-  .price-block .price-new {
-    font-weight: 900; 
-    color: var(--color-price-new-bold); 
-    font-size: 3.5rem; 
-    line-height: 1;
-  }
-
-  .price-block .price-note {
-    color: var(--color-success);
-    font-weight: 700;
-    font-size: 1.1rem; 
-    margin-top: 12px;
-  }
-
-  .price-block .promo-info {
-    margin-top: 20px; 
-    padding-top: 18px; 
-    border-top: 1px dashed #b0c2e3; 
-    font-size: 1rem; 
-    color: var(--color-text-subtle);
-  }
-
-  .price-block .promo-info span {
-    font-weight: 700;
-    color: var(--color-text-main);
-  }
-
-  /* --- Form Controls --- */
-  .form-control {
-    border-radius: 12px;
-    border: 1px solid var(--color-border-light);
-    padding: 12px 18px;
-    font-size: 1rem;
-    transition: all 0.2s ease;
-    background-color: var(--color-button-inactive); 
-  }
-  .form-control:focus {
-    border-color: var(--color-accent-blue);
-    box-shadow: 0 0 0 3px var(--color-focus-shadow); 
-    background-color: var(--color-card);
-  }
-
-  /* --- 3. Гармонійні Кнопки Вибору (Toggle Buttons) --- */
   .btn-outline-primary, .btn-outline-success {
-    border-radius: 20px;
-    font-weight: 500;
-    padding: 8px 16px;
-    transition: all 0.2s ease-in-out;
-    border: 1px solid var(--color-button-inactive-border);
-    color: var(--color-text-main);
-    background-color: var(--color-button-inactive); 
+    border-radius: 20px; font-weight:500; padding:8px 16px; transition: all 0.2s; border:1px solid var(--color-button-inactive-border);
+    color: var(--color-text-main); background-color: var(--color-button-inactive);
   }
-  
   .btn-outline-primary.active, .btn-outline-success.active {
-    color: #ffffff !important;
-    background-color: var(--color-accent-blue) !important;
-    border-color: var(--color-accent-blue) !important;
-    box-shadow: 0 2px 5px rgba(0, 122, 255, 0.3);
+    color:#fff!important; background-color:var(--color-accent-blue)!important; border-color:var(--color-accent-blue)!important;
+    box-shadow: 0 2px 5px rgba(0,122,255,0.3);
   }
 
-  /* --- Submit Button (Main Action) --- */
-  .btn-primary {
-    border-radius: 16px;
-    font-weight: 600;
-    background-color: var(--color-accent-blue);
-    border-color: var(--color-accent-blue);
-    padding: 14px 20px;
-    font-size: 1.05rem;
-    transition: background-color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 5px 15px rgba(0, 122, 255, 0.25);
-  }
-  .btn-primary:hover {
-    background-color: #0066cc;
-    border-color: #0066cc;
-    box-shadow: 0 8px 18px rgba(0, 122, 255, 0.35);
-  }
+  .btn-primary { border-radius:16px; font-weight:600; background-color:var(--color-accent-blue); border-color:var(--color-accent-blue); padding:14px 20px; font-size:1.05rem; box-shadow:0 5px 15px rgba(0,122,255,0.25); }
+  .btn-primary:hover { background-color:#0066cc; border-color:#0066cc; box-shadow:0 8px 18px rgba(0,122,255,0.35); }
 
-  /* --- 4. Заголовки Дат (Accordion Headers) --- */
-  .date-card {
-    border: 1px solid var(--color-border-light);
-    border-radius: 16px;
-    overflow: hidden;
-    margin-bottom: 10px;
-    transition: box-shadow 0.2s;
-  }
-  .card-header {
-    background-color: var(--color-card);
-    border-bottom: none;
-    font-weight: 600;
-    color: var(--color-text-main);
-    padding: 14px 20px !important;
-  }
-  .toggle-icon {
-    font-size: 1.2rem;
-    font-weight: 700;
-    transition: transform 0.3s;
-  }
-  .card-header[aria-expanded="true"] .toggle-icon {
-    transform: rotate(90deg);
-  }
-  .card-body {
-    border-top: 1px solid var(--color-button-inactive-border); 
-    background-color: var(--color-button-inactive); 
-    padding: 15px 20px;
-  }
+  .date-card { border:1px solid var(--color-border-light); border-radius:16px; overflow:hidden; margin-bottom:10px; }
+  .card-header { background-color:var(--color-card); border-bottom:none; font-weight:600; color:var(--color-text-main); padding:14px 20px !important; }
+  .toggle-icon { font-size:1.2rem; font-weight:700; transition: transform 0.3s; }
+  .card-header[aria-expanded="true"] .toggle-icon { transform: rotate(90deg); }
+  .card-body { border-top:1px solid var(--color-button-inactive-border); background-color:var(--color-button-inactive); padding:15px 20px; }
+
+  /* Toastr tweak so popups appear above container */
+  #toast-container { z-index: 10800; } 
 </style>
 </head>
 <body class="p-4">
@@ -266,7 +122,7 @@
 <div class="container">
   <h1>Персональна пропозиція та Запис</h1>
 
-  <form id="bookingForm">
+  <form id="bookingForm" autocomplete="off" novalidate>
     <div class="doctor-card">
       <img id="doctorPhoto" src="https://psikhiatr-onlayn.kiev.ua/assets/img/doc/md_kotenko.jpeg" alt="Лікар">
       <input type="text" id="doctorName" class="form-control" value="Котенко Анастасія Олександрівна" disabled>
@@ -274,17 +130,12 @@
 
     <div class="mb-4 price-block text-center">
       <div class="price-label">Ваша персональна пропозиція</div>
-      
       <div class="price-wrapper">
         <div class="price-old">1500 грн</div>
         <div class="price-new">850 грн</div>
       </div>
-      
       <div class="price-note">Знижка активна лише для вас!</div>
-      
-      <div class="promo-info">
-        Персональний промокод: <span>PROMO123</span>
-      </div>
+      <div class="promo-info">Персональний промокод: <span>PROMO123</span></div>
     </div>
     
     <div class="mb-4">
@@ -308,7 +159,7 @@
     </div>
     <div class="mb-4">
       <label for="phone" class="form-label">Телефон</label>
-      <input type="tel" class="form-control" id="phone" placeholder="+38 (XXX) XXX-XX-XX" required>
+      <input type="tel" class="form-control" id="phone" placeholder="+38(XXX)XXX-XX-XX" required>
     </div>
 
     <div class="mb-4">
@@ -331,33 +182,57 @@
 
     <div class="mb-4">
       <label for="additionalInfo" class="form-label">Коментар (необов'язково)</label>
-      <textarea class="form-control" id="additionalInfo" name="additionalInfo" rows="3" placeholder="Опишіть, що ви хотіли б обговорити на консультації."></textarea>
+      <textarea class="form-control" id="additionalInfo" name="additionalInfo" rows="3"></textarea>
     </div>
 
     <button type="submit" class="btn btn-primary w-100">Записатися та отримати знижку</button>
   </form>
-
-  <div id="formResult" class="mt-4 text-center"></div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-const show_problem_buttons_problems = [
-  'Депресія', 'Тривожно-фобiчнi розлади', 'Обсесивно-компульсивний розлад',
-  'Розлади харчовоi поведiнки', 'Інше'
-];
-const dates = [
-  { date: '2025-10-01', slots: ['10:00','15:00','20:30'] },
-  { date: '2025-10-02', slots: ['10:00','15:00','20:30'] },
-  { date: '2025-10-03', slots: ['10:00','15:00','20:30'] },
-];
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.9/jquery.inputmask.min.js" integrity="sha512-F5Ul1uuyFlGnIT1dk2c4kB4DBdi5wnBJjVhL7gQlGh46Xn0VhvD8kgxLtjdZ5YN83gybk/aASUAlpdoWUjRR3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-$(document).ready(function() {
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+ 
+<script>
+// Дата народження
+Inputmask({ mask: "99.99.9999", placeholder: "дд.мм.рррр", clearIncomplete: false }).mask(document.getElementById('birthdate'));
+
+// Телефон
+Inputmask({ mask: "+38(999)999-99-99", placeholder: "+38(___)___-__-__", clearIncomplete: false }).mask(document.getElementById('phone'));
+
+// Email
+Inputmask({ alias: "email", placeholder: "example@mail.com", clearIncomplete: false }).mask(document.getElementById('email'));
+
+</script>
+
+<script>
+/* ====== Общая логика: маски, генерация кнопок, валидация и уведомления ====== */
+$(function() {
+  // Toastr настройка
+  toastr.options = {
+    "positionClass": "toast-top-left",
+    "timeOut": "3000",
+    "closeButton": false
+  };
+
+  // Проблемы и даты (пример)
+  const show_problem_buttons_problems = [
+    'Депресія', 'Тривожно-фобiчнi розлади', 'Обсесивно-компульсивний розлад',
+    'Розлади харчовоi поведiнки', 'Інше'
+  ];
+  const dates = [
+    { date: '2025-10-01', slots: ['10:00','15:00','20:30'] },
+    { date: '2025-10-02', slots: ['10:00','15:00','20:30'] },
+    { date: '2025-10-03', slots: ['10:00','15:00','20:30'] },
+  ];
+
+  /* ---- Рендер кнопок тем ---- */
   const problemContainer = $('#problemButtons');
   show_problem_buttons_problems.forEach(problem => {
     const btn = $(`<button type="button" class="btn btn-outline-primary btn-sm">${problem}</button>`);
-    btn.click(function() {
+    btn.on('click', function() {
       $('#problem').val(problem);
       problemContainer.find('button').removeClass('active');
       $(this).addClass('active');
@@ -365,7 +240,7 @@ $(document).ready(function() {
     problemContainer.append(btn);
   });
 
-
+  /* ---- Рендер слотов дат ---- */
   const datesContainer = $('#datesSlots');
   dates.forEach(d => {
     const collapseId = 'collapse_' + d.date.replace(/-/g, '');
@@ -381,13 +256,11 @@ $(document).ready(function() {
       </div>
     `);
 
-    // Кнопки слотів
     d.slots.forEach(slot => {
       const slotBtn = $(`<button type="button" class="btn btn-outline-success btn-sm">${slot}</button>`);
-      slotBtn.click(function(e) {
-        // Забираємо активний стан з усіх кнопок всіх днів
+      slotBtn.on('click', function() {
+        // снять активность у всех слотов
         $('.date-card').find('.card-body button').removeClass('active');
-        
         $('#selectedDate').val(d.date);
         $('#selectedSlot').val(slot);
         $(this).addClass('active');
@@ -398,15 +271,22 @@ $(document).ready(function() {
     datesContainer.append(card);
   });
 
-  $('#bookingForm').submit(function(e) {
+  // Вспомогательная проверка email
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  // Submit обработчик
+  $('#bookingForm').on('submit', function(e) {
     e.preventDefault();
+
     const data = {
-      name: $('#name').val(),
-      surname: $('#surname').val(), // Додано прізвище
-      patronymic: $('#patronymic').val(), // Додано по батькові
-      birthdate: $('#birthdate').val(), // Додано дату народження
-      phone: $('#phone').val(),
-      email: $('#email').val(),
+      name: $('#name').val().trim(),
+      surname: $('#surname').val().trim(),
+      patronymic: $('#patronymic').val().trim(),
+      birthdate: $('#birthdate').val().trim(),
+      phone: $('#phone').val().trim(),
+      email: $('#email').val().trim(),
       problem: $('#problem').val(),
       doctor: $('#doctorName').val(),
       date: $('#selectedDate').val(),
@@ -414,20 +294,23 @@ $(document).ready(function() {
       promo: 'PROMO123'
     };
 
-    if(!data.problem || !data.date || !data.slot){
-      $('#formResult').html(`<div class="alert alert-danger" role="alert">Будь ласка, оберіть проблему, дату та слот для запису.</div>`);
-      return;
-    }
+    // Проверки обязательных полей — учитываем неполные маски (символ "_")
+    if(!data.name) { toastr.error("Вкажіть ім'я."); return; }
+    if(!data.surname) { toastr.error("Вкажіть прізвище."); return; }
+    // Проверка заполненности маски: если в значении есть символ-заполнитель '_', поле не заполнено
+    if(!data.birthdate || data.birthdate.indexOf('_') !== -1) { toastr.error("Вкажіть коректну дату народження."); return; }
+    if(!data.phone || data.phone.indexOf('_') !== -1) { toastr.error("Вкажіть коректний телефон у форматі +38(XXX)XXX-XX-XX."); return; }
+    if(!data.email || !validateEmail(data.email)) { toastr.error("Вкажіть коректний Email."); return; }
+    if(!data.problem) { toastr.warning("Оберіть тему консультації."); return; }
+    if(!data.date || !data.slot) { toastr.warning("Оберіть дату та зручний час."); return; }
 
-    $('#formResult').html(`<div class="alert alert-success mt-3" role="alert">
-      <strong>Успішно!</strong> Ваше бронювання прийнято. Знижку застосовано!<br>
-      <small>${JSON.stringify(data, null, 2)
-          .replace(/"/g, '')
-          .replace(/,/g, ',<br>')
-          .replace(/{/g, '')
-          .replace(/}/g, '')
-        }</small>
-    </div>`);
+    // Если всё ок — показываем успех (здесь можно отправить AJAX)
+    toastr.success("Ваше бронювання успішно прийнято! Знижку застосовано.");
+
+    // Пример: показать данные в консоли (или отправить на сервер)
+    console.log("Booking data:", data);
+
+    // Сброс формы
     this.reset();
     $('#problem').val('');
     $('#selectedDate').val('');
