@@ -50,6 +50,27 @@
   
   .container { max-width: 600px; padding-top: 20px; padding-bottom: 20px; }
 
+  /* Минимальные боковые отступы для мобильных */
+  @media (max-width: 576px) {
+    body {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .container {
+      max-width: 100%;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    form {
+      padding: 25px 15px; /* меньше паддинги внутри формы */
+    }
+    .price-block {
+      padding: 25px 15px;
+    }
+  }
+
   h1 {
     font-weight: 700;
     color: var(--color-text-main);
