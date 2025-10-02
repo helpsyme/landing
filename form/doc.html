@@ -315,17 +315,7 @@ $(function() {
 
   const urlParams = getUrlParams();
 
-  function showParamsAlert(params) {
-    if (Object.values(params).some(v => v)) {
-      let text = 'Отримані GET-параметри:\n';
-      Object.keys(params).forEach(k => { text += `${k}: ${params[k]}\n`; });
-      alert(text);
-      console.log('GET params:', params);
-    }
-  }
-
-  showParamsAlert(urlParams);
-
+  
   // Валидация email
   function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
 
