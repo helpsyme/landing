@@ -362,9 +362,9 @@ $(function() {
       url: 'https://script.google.com/macros/s/YOUR_ID/exec',
       method: 'POST',
       data: JSON.stringify(payload),
-      contentType: 'text/plain;charset=utf-8', // обход preflight
-      dataType: 'text',
-      success: function(result){
+      contentType: 'text/plain;charset=utf-8',
+      dataType: 'text',  // получаем текст, потом парсим JSON
+      success: function(result) {
         const response = JSON.parse(result);
         if(response.success && response.id && response.token){
           window.location.href = `/xxx.html?id=${encodeURIComponent(response.id)}&token=${encodeURIComponent(response.token)}`;
@@ -377,6 +377,7 @@ $(function() {
         console.error(xhr, status, error);
       }
     });
+
 
 
 
