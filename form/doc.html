@@ -82,6 +82,8 @@
 
   /* ===== Блок цены ===== */
   .price-block {
+    max-width: 500px;
+    margin: 0 auto;
     background: linear-gradient(135deg, var(--color-price-gradient-start), var(--color-price-gradient-end)); 
     border-radius: 28px; padding: 35px 30px; margin-bottom: 40px; 
     box-shadow: 0 15px 35px var(--color-price-block-shadow); border: 1px solid #a8c4ff;
@@ -114,6 +116,7 @@
   .form-control:focus { border-color:var(--color-accent-blue); box-shadow: 0 0 0 3px var(--color-focus-shadow); background-color:var(--color-card); }
 
   .btn-outline-primary, .btn-outline-success {
+    
     border-radius: 20px; font-weight:500; padding:8px 16px; transition: all 0.2s; border:1px solid var(--color-button-inactive-border);
     color: var(--color-text-main); background-color: var(--color-button-inactive);
   }
@@ -227,7 +230,9 @@
       <textarea class="form-control" id="additionalInfo" name="additionalInfo" rows="3"></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary w-100">Записатися та отримати знижку</button>
+    <div class="d-flex justify-content-center">
+      <button type="submit" class="btn btn-primary w-50">Записатися та отримати знижку</button>
+    </div>
   </form>
 </div>
 
@@ -237,20 +242,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script>
-Inputmask({ mask: "99.99.9999", placeholder: "дд.мм.рррр", clearIncomplete: false }).mask(document.getElementById('birthdate'));
-Inputmask({ mask: "+38(999)999-99-99", placeholder: "+38(___)___-__-__", clearIncomplete: false }).mask(document.getElementById('phone'));
-Inputmask({ alias: "email", placeholder: "example@mail.com", clearIncomplete: false }).mask(document.getElementById('email'));
-
 $(function() {
-  toastr.options = { "positionClass": "toast-top-left", "timeOut": "3000", "closeButton": false };
+  const apiUrl = 'https://script.google.com/macros/s/AKfycbxMfRcbbiEh0uA7pqXAt8C9hfxCeT1DEwEfBB_-xc0WkvfNuI59tGPiidriVh4eJ02T/exec'; // <-- вставьте свой URL API
 
-  const problems = ['Депресія', 'Тривожно-фобiчнi розлади', 'Обсесивно-компульсивний розлад', 'Розлади харчовоi поведiнки', 'Інше'];
-  const dates = [
-    { date: '2025-10-01', slots: ['10:00','15:00','20:30'] },
-    { date: '2025-10-02', slots: ['10:00','15:00','20:30'] },
-    { date: '2025-10-03', slots: ['10:00','15:00','20:30'] },
-  ];
+  const getKeys = ['docid','utm_source','utm_medium','utm_campaign','utm_term','term','token','leadid'];
 
+  // Маски полей
+  Inputmask({ mask: "99.99.9999", placeholder: "дд.мм.рррр", clearIncomplete: false }).mask($('#birthdate'));
+  Inputmask({ mask: "+38(999)999-99-99", placeholder: "+38(___)___-__-__", clearIncomplete: false }).mask($('#phone'));
+  Inputmask({ alias: "email", placeholder: "example@mail.com", clearIncomplete: false }).mask($('#email'));
+
+  // Проблемы
+  const problems = ['Депресія','Тривожно-фобiчнi розлади','Обсесивно-компульсивний розлад','Розлади харчовоi поведiнки','Інше'];
   const problemContainer = $('#problemButtons');
   problems.forEach(p => {
     const btn = $(`<button type="button" class="btn btn-outline-primary btn-sm">${p}</button>`);
@@ -262,9 +265,15 @@ $(function() {
     problemContainer.append(btn);
   });
 
+  // Даты и слоты
+  const dates = [
+    { date: '2025-10-01', slots: ['10:00','15:00','20:30'] },
+    { date: '2025-10-02', slots: ['10:00','15:00','20:30'] },
+    { date: '2025-10-03', slots: ['10:00','15:00','20:30'] }
+  ];
   const datesContainer = $('#datesSlots');
   dates.forEach(d => {
-    const collapseId = 'collapse_' + d.date.replace(/-/g, '');
+    const collapseId = 'collapse_' + d.date.replace(/-/g,'');
     const card = $(`
       <div class="card mb-2 date-card">
         <div class="card-header p-2 d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="false" aria-controls="${collapseId}" style="cursor:pointer;">
@@ -289,39 +298,106 @@ $(function() {
     datesContainer.append(card);
   });
 
+  // GET-параметры
+  function getUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    const result = {};
+    getKeys.forEach(k => {
+      let v = params.get(k) || params.get(k.toLowerCase());
+      if (v === null && k.startsWith('utm_')) {
+        v = params.get(k.replace(/^utm_/, ''));
+      }
+      result[k] = v || '';
+    });
+    return result;
+  }
+
+  const urlParams = getUrlParams();
+
+  function showParamsAlert(params) {
+    if (Object.values(params).some(v => v)) {
+      let text = 'Отримані GET-параметри:\n';
+      Object.keys(params).forEach(k => { text += `${k}: ${params[k]}\n`; });
+      alert(text);
+      console.log('GET params:', params);
+    }
+  }
+
+  showParamsAlert(urlParams);
+
+  // Валидация email
   function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
 
+  // Отправка формы
   $('#bookingForm').on('submit', function(e) {
     e.preventDefault();
-    const data = {
+
+    const formData = {
       name: $('#name').val().trim(),
       surname: $('#surname').val().trim(),
       patronymic: $('#patronymic').val().trim(),
       birthdate: $('#birthdate').val().trim(),
       phone: $('#phone').val().trim(),
       email: $('#email').val().trim(),
-      problem: $('#problem').val(),
+      problem: $('#problem').val().trim(),
       doctor: $('#doctorName').val(),
       date: $('#selectedDate').val(),
       slot: $('#selectedSlot').val(),
       promo: 'PROMO123'
     };
-    if(!data.name){ toastr.error("Вкажіть ім'я."); return; }
-    if(!data.surname){ toastr.error("Вкажіть прізвище."); return; }
-    if(!data.birthdate || data.birthdate.indexOf('_') !== -1){ toastr.error("Вкажіть коректну дату народження."); return; }
-    if(!data.phone || data.phone.indexOf('_') !== -1){ toastr.error("Вкажіть коректний телефон."); return; }
-    if(!data.email || !validateEmail(data.email)){ toastr.error("Вкажіть коректний Email."); return; }
-    if(!data.problem){ toastr.warning("Оберіть тему консультації."); return; }
-    if(!data.date || !data.slot){ toastr.warning("Оберіть дату та зручний час."); return; }
-    toastr.success("Ваше бронювання успішно прийнято! Знижку застосовано.");
-    console.log("Booking data:", data);
-    this.reset();
-    $('#problem').val('');
-    $('#selectedDate').val('');
-    $('#selectedSlot').val('');
-    $('.btn.active').removeClass('active');
+
+    // Валидация
+    if(!formData.name){ toastr.error("Вкажіть ім'я."); return; }
+    if(!formData.surname){ toastr.error("Вкажіть прізвище."); return; }
+    if(!formData.birthdate || formData.birthdate.includes('_')){ toastr.error("Вкажіть коректну дату народження."); return; }
+    if(!formData.phone || formData.phone.includes('_')){ toastr.error("Вкажіть коректний телефон."); return; }
+    if(!formData.email || !validateEmail(formData.email)){ toastr.error("Вкажіть коректний Email."); return; }
+    if(!formData.problem){ toastr.warning("Оберіть тему консультації."); return; }
+    if(!formData.date || !formData.slot){ toastr.warning("Оберіть дату та зручний час."); return; }
+
+    const payload = { ...formData, ...urlParams };
+
+    $.ajax({
+  url: apiUrl,
+  method: 'POST',
+  data: JSON.stringify(payload),
+  contentType: 'application/json',
+  dataType: 'json', // ожидаем JSON-ответ
+  success: function(response) {
+    // Проверяем, что ответ действительно объект и содержит id и token
+    if (response && response.success && response.id && response.token) {
+      toastr.success("Бронювання успішно надіслано!");
+      // Пример редиректа, если нужно
+      // window.location.href = `/xxx.html?id=${encodeURIComponent(response.id)}&token=${encodeURIComponent(response.token)}`;
+    } else {
+      // Если сервер вернул объект с ошибкой
+      const msg = (response && response.message) ? response.message : "Помилка при обробці заявки. Спробуйте ще раз.";
+      toastr.error(msg);
+      console.error("Unexpected API response:", response);
+    }
+  },
+  error: function(xhr, status, error) {
+    // Пытаемся получить сообщение от сервера
+    let msg = "Не вдалося відправити заявку. Спробуйте пізніше.";
+    if (xhr.responseText) {
+      try {
+        const resp = JSON.parse(xhr.responseText);
+        if (resp.message) msg = resp.message;
+      } catch(e) {
+        // Игнорируем, если не JSON
+      }
+    }
+    toastr.error(msg);
+    console.error("API request error:", status, error, xhr.responseText);
+  }
+});
+
   });
 });
 </script>
+
+
+
+
 </body>
 </html>

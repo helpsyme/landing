@@ -1,0 +1,163 @@
+* { box-sizing: border-box; }
+
+/* ===== Глобальные переменные ===== */
+:root {
+  --color-background-start: #ecedf3;
+  --color-background-end: #d8d8e5;
+  --color-card: #ffffff;
+  --color-text-main: #1c1c1e;
+  --color-text-subtle: #8e8e93;
+  --color-accent-blue: #007aff;
+  --color-light-blue-bg: #f0f7ff;
+  --color-border-light: #c8c8d3;
+  --color-shadow: rgba(0,0,0,0.08);
+  --color-price-final: #c70039;
+  --color-discount-badge: #ff3b30;
+  --color-success: #34c759;
+  --color-price-gradient-start: #e1e9ff;
+  --color-price-gradient-end: #f5f8ff;
+  --color-price-old-subtle: #9999a0;
+}
+
+/* ===== Базовые стили ===== */
+body {
+  background: repeating-linear-gradient(-45deg, rgba(0,0,0,0.05), rgba(0,0,0,0.05) 1px, transparent 1px, transparent 20px),
+              linear-gradient(150deg, var(--color-background-start) 0%, var(--color-background-end) 100%);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  color: var(--color-text-main);
+  line-height: 1.6;
+  padding: 40px 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  max-width: 720px;
+  background: var(--color-card);
+  border-radius: 28px;
+  padding: 40px 45px;
+  box-shadow: 0 10px 30px var(--color-shadow);
+  text-align: center;
+}
+
+/* ===== Заголовки ===== */
+h1 {
+  font-weight: 800;
+  margin-bottom: 40px;
+  font-size: 2.4rem;
+  text-align: center;
+  color: var(--color-text-main);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.7);
+}
+
+/* ========================================================= */
+/* ===== СТРАНИЦА: ОПЛАТА (.page-payment) ===== */
+/* ========================================================= */
+.page-payment .price-block {
+  background: linear-gradient(135deg, var(--color-price-gradient-start), var(--color-price-gradient-end));
+  border-radius: 24px;
+  padding: 35px 25px;
+  box-shadow: 0 8px 25px rgba(0, 122, 255, 0.12);
+  border: 1px solid #a8c4ff;
+  margin-bottom: 50px;
+}
+.page-payment .price-new {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--color-price-final);
+}
+.page-payment .discount-badge {
+  background: var(--color-discount-badge);
+  color: #fff;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 14px;
+}
+.page-payment .card-visual {
+  background: linear-gradient(135deg,#0f4b8a,#1ea6ff);
+  border-radius: 14px 14px 0 0;
+  padding: 18px;
+  color: #fff;
+  text-align: center;
+}
+.page-payment .card-number-input {
+  background: transparent;
+  border: none;
+  font-family: "Space Mono", monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+}
+.page-payment .toast-popup {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.98));
+  color: var(--color-text-main);
+  padding: 10px 14px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.06);
+  font-weight: 700;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: transform 240ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease;
+}
+.page-payment .toast-popup.show {
+  opacity: 1;
+  transform: translate(-50%, -60%) scale(1);
+}
+
+/* ========================================================= */
+/* ===== СТРАНИЦА: ФОРМА ВРАЧА (.page-form) ===== */
+/* ========================================================= */
+.page-form form {
+  background-color: var(--color-card);
+  border-radius: 28px;
+  padding: 35px;
+  box-shadow: 0 10px 30px var(--color-shadow);
+  border: 1px solid var(--color-border-light);
+}
+.page-form .doctor-card {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.page-form .doctor-card img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  border: 4px solid var(--color-accent-blue);
+  box-shadow: 0 4px 10px var(--color-shadow);
+}
+
+/* ========================================================= */
+/* ===== СТРАНИЦА: СТАТУС (.page-status) ===== */
+/* ========================================================= */
+.page-status .status-icon {
+  font-size: 64px;
+  color: var(--color-accent-blue);
+  margin-bottom: 20px;
+}
+.page-status .note {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 25px;
+  padding: 15px;
+  background: #f8f9ff;
+  border-radius: 12px;
+  border: 1px solid #e0e0f0;
+}
+
+/* ===== Мобайл адаптив ===== */
+@media (max-width: 767px) {
+  .container { width: 100%; padding: 20px; border-radius: 0; box-shadow: none; }
+  h1 { font-size: 32px; }
+}
