@@ -138,7 +138,9 @@
 <script>
 $(function() {
 
-  const getKeys = ['docid','utm_source','utm_medium','utm_campaign','utm_term','term','token','leadid'];
+  // --- Параметры ---
+  const requiredKeys = ['token']; // обязательные
+  const optionalKeys = ['utm_source','utm_medium','utm_campaign','utm_term']; // необязательные
 
   // --- Маски ---
   Inputmask({ mask: "99.99.9999" }).mask($('#birthdate'));
@@ -158,67 +160,128 @@ $(function() {
     problemContainer.append(btn);
   });
 
-  // --- URL параметры ---
+  // --- Получение URL параметров ---
   function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
     const result = {};
-    getKeys.forEach(k => { result[k] = params.get(k) || ''; });
+    const missingKeys = [];
+
+    requiredKeys.forEach(k => {
+      const value = params.get(k);
+      if (!value) missingKeys.push(k);
+      result[k] = value || '';
+    });
+
+    optionalKeys.forEach(k => {
+      result[k] = params.get(k) || '';
+    });
+
+    if (missingKeys.length) {
+      throw new Error('Отсутствуют обязательные параметры: ' + missingKeys.join(', '));
+    }
+
     return result;
   }
-  const urlParams = getUrlParams();
 
-  // --- Запрос к API для заполнения страницы ---
-  $('#loadingOverlay').removeClass('hidden'); // показываем спиннер
+  let urlParams;
+  try {
+    urlParams = getUrlParams();
+    console.log('URL params:', urlParams);
+  } catch(err) {
+    $('#loadingOverlay').addClass('hidden');
+    toastr.error(err.message);
+    return; // останавливаем дальнейшую загрузку
+  }
 
-  fetch("https://script.google.com/macros/s/AKfycby2biLXh3zPNFudnQYdvsOeMQZzZJ_9QQdLzuQsyWcGILydK7Oajry6EmXleqJf0pfGIg/exec", {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ init: 1, ...urlParams })
-  })
-  .then(r => r.json())
-  .then(data => {
-    $('#loadingOverlay').addClass('hidden'); // скрываем после успешной загрузки
-    console.log("data:", data);
-    if(data.doctorName) $('#doctorName').val(data.doctorName);
-    if(data.doctorPhoto) $('#doctorPhoto').attr('src', data.doctorPhoto);
-    if(data.priceNew) $('.price-new').text(data.priceNew);
-    if(data.priceOld) $('.price-old').text(data.priceOld);
-    if(data.promo) $('.promo-info span').text(data.promo);
+// --- Запрос к API для заполнения страницы ---
+$('#loadingOverlay').removeClass('hidden');
 
-    if(data.dates) {
-      const datesContainer = $('#datesSlots').empty();
-      data.dates.forEach(d => {
-        const collapseId = 'collapse_' + d.date.replace(/-/g,'');
-        const card = $(`
-          <div class="card mb-2 date-card">
-            <div class="card-header d-flex justify-content-between align-items-center" 
-                data-bs-toggle="collapse" data-bs-target="#${collapseId}">
-              <span>${d.date}</span><span class="toggle-icon">▸</span>
-            </div>
-            <div id="${collapseId}" class="collapse">
-              <div class="card-body d-flex flex-wrap gap-2"></div>
-            </div>
+// --- Запрос к API для заполнения страницы ---
+$('#loadingOverlay').removeClass('hidden');
+
+// --- Запрос к API для заполнения страницы ---
+$('#loadingOverlay').removeClass('hidden');
+
+fetch("https://script.google.com/macros/s/AKfycby2biLXh3zPNFudnQYdvsOeMQZzZJ_9QQdLzuQsyWcGILydK7Oajry6EmXleqJf0pfGIg/exec", {
+  method: 'POST',
+  headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+  body: JSON.stringify({ init: 1, ...urlParams })
+})
+.then(r => r.json())
+.then(resp => {
+  $('#loadingOverlay').addClass('hidden');
+  console.log("data:", resp);
+
+
+
+  const page = resp;
+  // --- Если статус внутри данных не success ---
+  if (!page || page.status !== 'success') {
+    $('body').children().not('#loadingOverlay').hide();
+    $('body').append(`
+      <div class="container mt-5 text-center">
+        <h2>На жаль, персональна пропозиція недоступна</h2>
+      </div>
+    `);
+    return;
+  }
+
+  // --- Если success, заполняем страницу ---
+  if(page.doctorName) $('#doctorName').val(page.doctorName);
+  if(page.doctorPhoto) $('#doctorPhoto').attr('src', page.doctorPhoto);
+  if(page.priceNew) $('.price-new').text(page.priceNew);
+  if(page.priceOld) $('.price-old').text(page.priceOld);
+  if(page.promo) $('.promo-info span').text(page.promo);
+
+  if(page.dates && page.dates.length) {
+    const datesContainer = $('#datesSlots').empty();
+    page.dates.forEach(d => {
+      const collapseId = 'collapse_' + d.date.replace(/-/g,'');
+      const card = $(`
+        <div class="card mb-2 date-card">
+          <div class="card-header d-flex justify-content-between align-items-center" 
+              data-bs-toggle="collapse" data-bs-target="#${collapseId}">
+            <span>${d.date}</span><span class="toggle-icon">▸</span>
           </div>
-        `);
-        d.slots.forEach(slot => {
-          const btn = $(`<button type="button" class="btn btn-outline-success btn-sm">${slot}</button>`);
-          btn.on('click', function() {
-            $('.date-card .card-body button').removeClass('active');
-            $('#selectedDate').val(d.date);
-            $('#selectedSlot').val(slot);
-            $(this).addClass('active');
-          });
-          card.find('.card-body').append(btn);
+          <div id="${collapseId}" class="collapse">
+            <div class="card-body d-flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+      `);
+      d.slots.forEach(slot => {
+        const btn = $(`<button type="button" class="btn btn-outline-success btn-sm">${slot}</button>`);
+        btn.on('click', function() {
+          $('.date-card .card-body button').removeClass('active');
+          $('#selectedDate').val(d.date);
+          $('#selectedSlot').val(slot);
+          $(this).addClass('active');
         });
-        datesContainer.append(card);
+        card.find('.card-body').append(btn);
       });
-    }
-  })
-  .catch(e => {
-    $('#loadingOverlay').addClass('hidden'); // скрываем и при ошибке
-    toastr.error("Не вдалося завантажити персональну пропозицію");
-  });
-
+      datesContainer.append(card);
+    });
+  } else {
+    // Если нет слотов
+    $('body').children().not('#loadingOverlay').hide();
+    $('body').append(`
+      <div class="container mt-5 text-center">
+        <h2>На жаль, персональна пропозиція недоступна</h2>
+        <p>Вільних слотів немає</p>
+      </div>
+    `);
+  }
+})
+.catch(e => {
+  $('#loadingOverlay').addClass('hidden');
+  $('body').children().not('#loadingOverlay').hide();
+  $('body').append(`
+    <div class="container mt-5 text-center">
+      <h2>На жаль, персональна пропозиція недоступна</h2>
+      <p>Не вдалося завантажити дані</p>
+    </div>
+  `);
+  console.error(e);
+});
 
   // --- Сабмит формы ---
   $('#bookingForm').on('submit', function(e) {
@@ -256,7 +319,7 @@ $(function() {
         $('#bookingForm')[0].reset();
         $('.btn-outline-primary, .btn-outline-success').removeClass('active');
       } else {
-        toastr.error("Помилка при обробці заявки");
+        toastr.error(res.message || "Помилка при обробці заявки");
       }
       btn.prop('disabled', false).html(oldText);
     })
@@ -265,6 +328,7 @@ $(function() {
       btn.prop('disabled', false).html(oldText);
     });
   });
+
 });
 </script>
 </body>
