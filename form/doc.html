@@ -178,7 +178,7 @@ $(function() {
   .then(r => r.json())
   .then(data => {
     $('#loadingOverlay').addClass('hidden'); // скрываем после успешной загрузки
-
+    console.log("data:", data);
     if(data.doctorName) $('#doctorName').val(data.doctorName);
     if(data.doctorPhoto) $('#doctorPhoto').attr('src', data.doctorPhoto);
     if(data.priceNew) $('.price-new').text(data.priceNew);
