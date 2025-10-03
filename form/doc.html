@@ -137,7 +137,7 @@
 
 <script>
 $(function() {
-  const apiUrl = 'https://script.google.com/macros/s/AKfycbxMfRcbbiEh0uA7pqXAt8C9hfxCeT1DEwEfBB_-xc0WkvfNuI59tGPiidriVh4eJ02T/exec';
+
   const getKeys = ['docid','utm_source','utm_medium','utm_campaign','utm_term','term','token','leadid'];
 
   // --- Маски ---
@@ -244,7 +244,7 @@ $(function() {
 
     const payload = { ...formData, ...urlParams };
 
-    fetch(apiUrl, {
+    fetch('https://script.google.com/macros/s/AKfycbzdYVR7l79ww1w2v2IygQT4kqbMGIOdPhSDOxbIXEyOYYa52mD2T2qedisemirooLyanQ/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
