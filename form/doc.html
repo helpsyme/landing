@@ -83,6 +83,22 @@
     align-items: center;
   }
   #loadingOverlay.hidden { display: none; }
+
+  .discount-highlight {
+    font-size: 2.5rem;        /* большой размер */
+    font-weight: 900;         /* жирный шрифт */
+    color: #c70039;           /* ярко-красный */
+    text-shadow: 0 0 10px rgba(199,0,57,0.6); /* легкая подсветка */
+    animation: pulse 1.5s infinite; /* пульсация */
+    display: inline-block;
+    margin: 0 10px;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
 </style>
 </head>
 <body class="p-4">
@@ -102,8 +118,10 @@
         <div class="price-new"></div>
         <div class="price-old"></div>
       </div>
-      <div class="price-note">Знижка активна лише для вас!</div>
-      <div class="promo-info">Персональний промокод: <span></span></div>
+      <div class="price-note">
+        Знижка 
+        <span id="discount" class="discount-highlight"></span> активна лише для вас!
+      </div>
     </div>
 
     <!-- Форма -->
@@ -166,18 +184,28 @@ $(function() {
     const result = {};
     const missingKeys = [];
 
+    // Проверяем обязательные ключи
     requiredKeys.forEach(k => {
       const value = params.get(k);
       if (!value) missingKeys.push(k);
       result[k] = value || '';
     });
 
+    // Проверяем необязательные ключи
     optionalKeys.forEach(k => {
       result[k] = params.get(k) || '';
     });
 
+    // Если не хватает обязательных параметров — показываем сообщение
     if (missingKeys.length) {
-      throw new Error('Отсутствуют обязательные параметры: ' + missingKeys.join(', '));
+      $('body').children().not('#loadingOverlay').hide();
+      $('body').append(`
+        <div class="container mt-5 text-center">
+          <h2>На жаль, персональна пропозиція недоступна</h2>
+        </div>
+      `);
+      // Можно вернуть null, чтобы другие части кода знали, что параметры невалидные
+      return null;
     }
 
     return result;
@@ -232,6 +260,9 @@ fetch("https://script.google.com/macros/s/AKfycby2biLXh3zPNFudnQYdvsOeMQZzZJ_9QQ
   if(page.priceNew) $('.price-new').text(page.priceNew);
   if(page.priceOld) $('.price-old').text(page.priceOld);
   if(page.promo) $('.promo-info span').text(page.promo);
+  if (page.discountPercent) {
+      $('#discount').text(`${page.discountPercent}%`);
+    }
 
   if(page.dates && page.dates.length) {
     const datesContainer = $('#datesSlots').empty();
@@ -301,7 +332,6 @@ fetch("https://script.google.com/macros/s/AKfycby2biLXh3zPNFudnQYdvsOeMQZzZJ_9QQ
       doctor: $('#doctorName').val(),
       date: $('#selectedDate').val(),
       slot: $('#selectedSlot').val(),
-      promo: $('.promo-info span').text(),
       additionalInfo: $('#additionalInfo').val()
     };
 
