@@ -393,6 +393,10 @@ $('#bookingForm').on('submit', function(e) {
       toastr.success("Форма успішно відправлена!");
       $('#bookingForm')[0].reset();
       $('.btn-outline-primary, .btn-outline-success').removeClass('active');
+      // Небольшая задержка перед редиректом
+      setTimeout(() => {
+        window.location.href = "/form-end";
+      }, 1500); // 1.5 секунды
     } else {
       toastr.error(res.message || "Помилка при обробці заявки");
     }
