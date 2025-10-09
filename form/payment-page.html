@@ -37,6 +37,7 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 /* --- Container --- */
@@ -244,6 +245,18 @@ h1{
   border-color: rgba(255,255,255,0.98) transparent transparent transparent;
 }
 
+/* --- Spinner Overlay --- */
+#loadingOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
 /* --- Media Queries --- */
 @media (max-width: 767px){
   .container{ width: 100%; padding: 20px; border-radius: 0; box-shadow: none; }
@@ -260,18 +273,31 @@ h1{
 </style>
 </head>
 <body>
+
+<!-- Spinner Overlay -->
+<div id="loadingOverlay">
+  <div class="spinner-border text-primary" role="status" style="width: 4rem; height: 4rem;">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
 <div class="container">
   <h1>🎉 Бронювання підтверджено!</h1>
 
   <div class="price-block">
-    <div class="price-label">Тільки для вас: Фінальна вартість консультації</div>
-    <div class="price-old-details">
-        <div class="discount-badge">-43%</div>
-        <div class="original-price-info">Звичайна ціна: <span class="price-old">1500 грн</span></div>
-    </div>
-    <div class="price-new-wrapper"><div class="price-new">850 грн</div></div>
-    <p class="discount-note">Застосовано <strong>персональну знижку</strong>, зафіксуйте ціну зараз!</p>
+  <!-- Таймер предложения прямо над ценой -->
+  <p style="font-size:13px;color:#777777;margin-bottom:15px;padding:10px;border-left:4px solid #0cb8b6;background-color:#f9f9f9;">
+    ⏰ Пропозиція активна ще: <span id="offerTimer" style="font-weight:700; color:red;"></span>
+  </p>
+
+  
+  <div class="price-old-details">
+      <div class="discount-badge">-0%</div>
+      <div class="original-price-info">Звичайна ціна: <span class="price-old">0 грн</span></div>
   </div>
+  <div class="price-new-wrapper"><div class="price-new">0 грн</div></div>
+  <!-- <p class="discount-note">Застосовано <strong>персональну знижку</strong>, зафіксуйте ціну зараз!</p> -->
+</div>
 
   <div class="card-action-block">
     <h2 class="h5 text-start mb-3" style="font-weight:700; padding-left:5px; color:var(--color-text-main);">
@@ -286,7 +312,7 @@ h1{
           class="card-number-input"
           type="text"
           maxlength="19"
-          value="4149 1234 5678 9012"
+          value="0000 0000 0000 0000"
           aria-label="Номер картки"
           readonly
         />
@@ -294,9 +320,9 @@ h1{
       </div>
 
       <div class="payment-instruction-block">
-        <p>Перекажіть суму <strong>850 грн</strong> на вказану вище картку.</p>
+        <p>Перекажіть суму <strong class="price-new-text">0 грн</strong> на вказану вище картку.</p>
         <p><strong>ОБОВ'ЯЗКОВО:</strong> додайте у коментар до платежу ваш персональний промокод:</p>
-        <div class="promo-code-box" id="promoCodeBox" role="button" aria-pressed="false">PROMO123</div>
+        <div class="promo-code-box" id="promoCodeBox" role="button" aria-pressed="false">000000</div>
       </div>
     </div>
   </div>
@@ -319,136 +345,120 @@ h1{
   </div>
 </div>
 
-<!-- Toast placeholder (inserted dynamically) -->
-<div id="globalToastContainer" aria-live="polite" aria-atomic="true"></div>
+<div id="offerTimer" style="font-weight:700; font-size:1.1rem; margin-top:10px;"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 <script>
-// --- Функції феєрверку ---
-function launchConfetti(particleCount, scalar, origin) {
-  confetti({
-    spread: 360,
-    ticks: 50,
-    gravity: 0,
-    decay: 0.94,
-    startVelocity: 30,
-    colors: ['#007aff', '#ff3b30', '#c70039', '#ffcc00', '#ffffff'],
-    particleCount: particleCount,
-    scalar: scalar,
-    origin: origin
-  });
-}
+document.addEventListener('DOMContentLoaded', async () => {
+  const overlay = document.getElementById('loadingOverlay');
 
-function fireSmallConfetti() {
-  launchConfetti(80, 0.8, { x: 0.2, y: 0.3 });
-  launchConfetti(80, 0.8, { x: 0.8, y: 0.3 });
-  setTimeout(() => launchConfetti(100, 1, { x: 0.5, y: 0.5 }), 100);
-}
+  // Получаем leadId из GET-параметра id
+  const urlParams = new URLSearchParams(window.location.search);
+  const leadId = urlParams.get('id');
 
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(fireSmallConfetti, 500);
-});
+  if (!leadId) {
+    document.body.innerHTML = `
+      <div class="container mt-5 text-center">
+        <h2>На жаль, персональна пропозиція недоступна</h2>
+      </div>
+    `;
+    return;
+  }
 
-// --- TOAST utility ---
-function createToastElement(message) {
-  const div = document.createElement('div');
-  div.className = 'toast-popup';
-  div.textContent = message;
-  div.setAttribute('role', 'status');
-  div.setAttribute('aria-live', 'polite');
-  document.body.appendChild(div);
-  return div;
-}
+  try {
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbwnsb2Ifl62AzEdzMWxzg8AEyt2aK6d6rvoL4FS2C4aO6z7D3Yzm3kd6APs0g7Qpr_WdQ/exec';
+    
+    const response = await fetch(`${apiUrl}?id=${leadId}`, { method: 'POST' });
+    const data = await response.json();
 
-function showToast(message, anchorRect = null, duration = 1200) {
-  // Create toast
-  const toast = createToastElement(message);
+    if (!data.error) {
+      // Подставляем значения на страницу
+      document.querySelector('.price-old').textContent = data.priceold || '—';
+      document.querySelector('.price-new').textContent = data.pricenew || '—';
+      document.querySelector('.price-new-text').textContent = data.pricenew || '—';
+      document.querySelector('.discount-badge').textContent = `-${data.discountpercent || 0}%`;
 
-  // Small delay to ensure it is in DOM and can measure
-  requestAnimationFrame(() => {
-    // Positioning: if anchorRect provided, show above it; otherwise center
-    if (anchorRect && typeof anchorRect === 'object') {
-      const toastRect = toast.getBoundingClientRect();
-      let left = anchorRect.left + (anchorRect.width / 2) - (toastRect.width / 2);
-      let top = anchorRect.top - toastRect.height - 12; // 12px gap
+      const cardInput = document.getElementById('cardNumberInput');
+      if (cardInput) cardInput.value = data.card_number || '';
 
-      // Keep inside viewport horizontally
-      const padding = 8;
-      left = Math.max(padding, Math.min(left, window.innerWidth - toastRect.width - padding));
-      if (top < padding) {
-        // if not enough space above, show below anchor
-        top = anchorRect.bottom + 12;
+      const promoBox = document.getElementById('promoCodeBox');
+      if (promoBox) promoBox.textContent = data.validation_code || '';
+
+      // --- Таймер оставшегося времени ---
+      const offerDurationMinutes = 15; // предложение действует 15 минут
+      const endTime = new Date(data.datetime).getTime() + offerDurationMinutes * 60 * 1000;
+      let currentTime = new Date(data.current_time).getTime();
+
+      const timerEl = document.getElementById('offerTimer');
+
+      function updateTimer() {
+        const remainingMs = endTime - currentTime;
+
+        if (remainingMs <= 0) {
+          timerEl.textContent = "⏰ Час дії пропозиції минув";
+          clearInterval(timerInterval);
+          return;
+        }
+
+        const minutes = Math.floor(remainingMs / 1000 / 60);
+        const seconds = Math.floor((remainingMs / 1000) % 60);
+
+        timerEl.textContent = `${minutes} хв ${seconds} с`;
+        currentTime += 1000;
       }
 
-      toast.style.left = (left + toastRect.width / 2) + 'px';
-      toast.style.top = (top + toastRect.height / 2) + 'px';
-      toast.style.transform = 'translate(-50%, -50%) scale(0.98)';
+      updateTimer(); // сразу показать
+      const timerInterval = setInterval(updateTimer, 1000);
+
     } else {
-      // default: center
-      toast.style.left = '50%';
-      toast.style.top = '40%';
-      toast.style.transform = 'translate(-50%, -50%) scale(0.98)';
+      document.body.innerHTML = `
+        <div class="container mt-5 text-center">
+          <h2>На жаль, персональна пропозиція недоступна</h2>
+        </div>
+      `;
     }
+  } catch (err) {
+    document.body.innerHTML = `
+      <div class="container mt-5 text-center">
+        <h2>На жаль, персональна пропозиція недоступна</h2>
+      </div>
+    `;
+    console.error('Fetch error:', err);
+  } finally {
+    if (overlay) overlay.style.display = 'none';
+  }
+});
 
-    // Show animation
-    requestAnimationFrame(() => toast.classList.add('show'));
-
-    // Auto remove
-    setTimeout(() => {
-      toast.classList.remove('show');
-      // Remove after transition
-      setTimeout(() => toast.remove(), 260);
-    }, duration);
+// --- Копирование номера карты ---
+const cardInput = document.getElementById('cardNumberInput');
+cardInput.addEventListener('click', () => {
+  cardInput.select();
+  navigator.clipboard.writeText(cardInput.value).then(() => {
+    showToast("Номер картки скопійовано ✅");
   });
+});
+
+// --- Копирование промокода ---
+const promoBox = document.getElementById('promoCodeBox');
+promoBox.addEventListener('click', () => {
+  navigator.clipboard.writeText(promoBox.textContent).then(() => {
+    showToast("Промокод скопійовано ✅");
+  });
+});
+
+// --- Toast уведомление ---
+function showToast(message) {
+  let toast = document.createElement('div');
+  toast.className = 'toast-popup show';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.remove('show');
+    toast.remove();
+  }, 2000);
 }
 
-// --- Копіювання номера карти, з pop-up замість alert ---
-const cardNumberInput = document.getElementById('cardNumberInput');
-cardNumberInput.addEventListener('click', async () => {
-  cardNumberInput.select();
-  const text = cardNumberInput.value;
-  try {
-    await navigator.clipboard.writeText(text);
-    // show toast near the input
-    const rect = cardNumberInput.getBoundingClientRect();
-    showToast('Номер картки скопійовано', rect, 1400);
-  } catch (err) {
-    // Fallback copy
-    try {
-      document.execCommand('copy');
-      const rect = cardNumberInput.getBoundingClientRect();
-      showToast('Номер картки скопійовано', rect, 1400);
-    } catch (e) {
-      showToast('Скопіюйте номер вручну', cardNumberInput.getBoundingClientRect(), 2000);
-    }
-  }
-});
-
-// --- Копіювання промокоду з попапом ---
-const promoCodeBox = document.getElementById('promoCodeBox');
-promoCodeBox.addEventListener('click', async () => {
-  const code = promoCodeBox.textContent.trim();
-  try {
-    await navigator.clipboard.writeText(code);
-    promoCodeBox.textContent = 'Скопійовано!';
-    promoCodeBox.setAttribute('aria-pressed', 'true');
-    showToast('Промокод скопійовано', promoCodeBox.getBoundingClientRect(), 1200);
-    setTimeout(() => {
-      promoCodeBox.textContent = 'PROMO123';
-      promoCodeBox.setAttribute('aria-pressed', 'false');
-    }, 1000);
-  } catch (err) {
-    showToast('Промокод не скопійовано — скопіюйте вручну', promoCodeBox.getBoundingClientRect(), 1800);
-  }
-});
-
-// --- Кнопка завантаження квитанції: замість alert використовуємо toast + конфетті ---
-document.getElementById("uploadReceiptBtn").addEventListener('click', (e)=>{
-  e.preventDefault();
-  fireSmallConfetti();
-  showToast('Готово — завантаження відкрито', null, 1400);
-  // Тут можна відкрити модаль або діалог завантаження файлу
-});
 </script>
-</body>
-</html>
+
+</body
