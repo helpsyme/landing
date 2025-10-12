@@ -381,32 +381,33 @@ $('#bookingForm').on('submit', function(e) {
   // Формируем итоговый payload
   const payload = { ...formData, ...utmData };
 
-  fetch('https://script.google.com/macros/s/.../exec', {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify(payload)
+  fetch('https://script.google.com/macros/s/AKfycbzdYVR7l79ww1w2v2IygQT4kqbMGIOdPhSDOxbIXEyOYYa52mD2T2qedisemirooLyanQ/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
   })
-  .then(r => r.json().then(data => ({ status: r.status, body: data })))
+  .then(response => response.json())
   .then(res => {
-    console.log("Ответ API:", res); // смотрим { status: HTTP статус, body: JSON }
-    
-    if (res.status === 200 && res.body.status === 'success') {
-      toastr.success("Форма успішно відправлена!");
-      $('#bookingForm')[0].reset();
-      $('.btn-outline-primary, .btn-outline-success').removeClass('active');
-      window.location.href = "/form-end";
-    } else if (res.status === 409 || (res.body.status === 'error' && res.body.message.includes('цей час вже зайнятий'))) {
-      toastr.error(res.body.message);
-    } else {
-      toastr.error(res.body.message || "Помилка при обробці заявки");
-    }
+      console.log("Ответ API:", res); // выводим полный ответ для отладки
+
+      if (res.status === 'success') {
+          toastr.success("Форма успішно відправлена!");
+          $('#bookingForm')[0].reset();
+          $('.btn-outline-primary, .btn-outline-success').removeClass('active');
+          window.location.href = "/form-end"; // редирект только при успехе
+      } else if (res.status === 'error' && res.message && res.message.includes('цей час вже зайнятий')) {
+          // слот занят
+          toastr.error(res.message);
+      } else {
+          toastr.error(res.message || "Помилка при обробці заявки");
+      }
   })
   .catch(err => {
-    console.error("Ошибка запроса:", err);
-    toastr.error("Не вдалося відправити заявку");
+      console.error("Ошибка запроса:", err); // выводим ошибку запроса
+      toastr.error("Не вдалося відправити заявку");
   })
   .finally(() => {
-    btn.prop('disabled', false).html(oldText);
+      btn.prop('disabled', false).html(oldText);
   });
 });
 
