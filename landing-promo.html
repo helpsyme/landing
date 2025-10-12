@@ -381,23 +381,23 @@ $('#bookingForm').on('submit', function(e) {
   // Формируем итоговый payload
   const payload = { ...formData, ...utmData };
 
-  // --- Отправляем запрос ---
   fetch('https://script.google.com/macros/s/AKfycbzdYVR7l79ww1w2v2IygQT4kqbMGIOdPhSDOxbIXEyOYYa52mD2T2qedisemirooLyanQ/exec', {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify(payload)
   })
-  .then(r => r.json())
+  .then(r => r.json().then(data => ({ status: r.status, body: data })))
   .then(res => {
-    if (res.status === 'success') {
+    if (res.status === 200 && res.body.status === 'success') {
       toastr.success("Форма успішно відправлена!");
       $('#bookingForm')[0].reset();
       $('.btn-outline-primary, .btn-outline-success').removeClass('active');
-      // редирект только при успешной отправке
-      window.location.href = "/form-end";
+      window.location.href = "/form-end"; // редирект только при успехе
+    } else if (res.status === 409) {
+      // слот занят
+      toastr.error(res.body.message || "Цей час вже зайнятий. Оберіть іншу дату або таймслот.");
     } else {
-      // при ошибке — уведомление, редирект не выполняется
-      toastr.error(res.message || "Помилка при обробці заявки");
+      toastr.error(res.body.message || "Помилка при обробці заявки");
     }
   })
   .catch(() => {
