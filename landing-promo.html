@@ -385,27 +385,29 @@ $('#bookingForm').on('submit', function(e) {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify(payload)
-  })
-  .then(r => r.json())
-  .then(res => {
+})
+.then(r => r.json())
+.then(res => {
+    console.log("Ответ API:", res); // <-- выводим весь ответ в консоль
+
     if (res.status === 'success') {
-      toastr.success("Форма успішно відправлена!");
-      $('#bookingForm')[0].reset();
-      $('.btn-outline-primary, .btn-outline-success').removeClass('active');
-      window.location.href = "/form-end"; // редирект только при успехе
+        toastr.success("Форма успішно відправлена!");
+        $('#bookingForm')[0].reset();
+        $('.btn-outline-primary, .btn-outline-success').removeClass('active');
+        window.location.href = "/form-end"; // редирект только при успехе
     } else if (res.status === 'error' && res.message.includes('цей час вже зайнятий')) {
-      // слот занят
-      toastr.error(res.message);
+        toastr.error(res.message);
     } else {
-      toastr.error(res.message || "Помилка при обробці заявки");
+        toastr.error(res.message || "Помилка при обробці заявки");
     }
-  })
-  .catch(() => {
+})
+.catch(err => {
+    console.error("Ошибка запроса:", err); // <-- вывод ошибки запроса в консоль
     toastr.error("Не вдалося відправити заявку");
-  })
-  .finally(() => {
+})
+.finally(() => {
     btn.prop('disabled', false).html(oldText);
-  });
+});
 });
 
 });
