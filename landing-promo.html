@@ -393,14 +393,17 @@ $('#bookingForm').on('submit', function(e) {
       toastr.success("Форма успішно відправлена!");
       $('#bookingForm')[0].reset();
       $('.btn-outline-primary, .btn-outline-success').removeClass('active');
+      // редирект только при успешной отправке
       window.location.href = "/form-end";
     } else {
+      // при ошибке — уведомление, редирект не выполняется
       toastr.error(res.message || "Помилка при обробці заявки");
     }
-    btn.prop('disabled', false).html(oldText);
   })
   .catch(() => {
     toastr.error("Не вдалося відправити заявку");
+  })
+  .finally(() => {
     btn.prop('disabled', false).html(oldText);
   });
 });
