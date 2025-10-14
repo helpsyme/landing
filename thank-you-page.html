@@ -23,33 +23,54 @@ body{
   background: #fff;
   border-radius: 24px;
   padding: 50px 40px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
   text-align: center;
 }
 h1{
   font-weight: 800;
   font-size: 2.2rem;
   color: #1c1c1e;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 .status-icon{
   font-size: 64px;
   color: #007aff;
   margin-bottom: 20px;
 }
-p{
-  font-size: 1.05rem;
-  color: #444;
-  margin-bottom: 12px;
-}
 .note{
   font-size: 0.9rem;
   color: #666;
-  margin-top: 25px;
-  padding: 15px;
-  background: #f8f9ff;
-  border-radius: 12px;
-  border: 1px solid #e0e0f0;
+  margin-bottom: 25px;
+}
+.text-block{
+  border-radius:16px;
+  padding: 30px 35px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.text-block.bg1{
+  background: #f1f5ff;
+  border:1px solid #d0d4e0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  text-align:center;
+  font-size:1.2rem;
+  font-weight:600;
+  line-height:1.6;
+}
+.text-block.bg2{
+  background:#f9f9ff;
+  border:1px solid #e0e0f0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  text-align:left;
+  font-size:1rem;
+  line-height:1.6;
+}
+.text-block.bg3{
+  text-align:left;
+  font-size:1rem;
+  line-height:1.6;
+  font-style: italic; /* делаем текст курсивом */
 }
 </style>
 </head>
@@ -57,11 +78,32 @@ p{
   <div class="container">
     <div class="status-icon">⏳</div>
     <h1>Оплата на перевірці</h1>
-    <p>Ваша квитанція успішно завантажена.</p>
-    <p>Наш менеджер перевіряє оплату.</p>
-    <p>Після підтвердження ви отримаєте лист із деталями на <b>вашу електронну пошту</b>.</p>
+    
+    <!-- Блок времени проверки ближе к заголовку -->
     <div class="note">
-      ⏰ Зазвичай перевірка займає до <b>3-х годин</b> у робочий час.
+      ⏰ Зазвичай перевірка займає до <b>6-х годин</b> у робочий час
+    </div>
+
+   
+    <div class="text-block bg2">
+      <div style="display:flex; align-items:flex-start; gap:15px; margin-bottom:15px;">
+        <div style="flex-shrink:0; width:35px; height:35px; background:#007aff; color:#fff; border-radius:50%; display:flex; justify-content:center; align-items:center; font-weight:bold; font-size:1rem;">1</div>
+        <p style="margin:0; line-height:1.5;">Ви отримаєте лист на <strong>електронну пошту</strong> з деталями та посиланням на <strong>онлайн-зустріч</strong>.</p>
+      </div>
+      <div style="display:flex; align-items:flex-start; gap:15px;">
+        <div style="flex-shrink:0; width:35px; height:35px; background:#007aff; color:#fff; border-radius:50%; display:flex; justify-content:center; align-items:center; font-weight:bold; font-size:1rem;">2</div>
+        <p style="margin:0; line-height:1.5;">У обраний час відкрийте посилання та приєднайтеся до <strong>онлайн-зустрічі</strong> з лікарем.</p>
+      </div>
+    </div>
+
+    <div style="font-style: italic; text-align: center; margin-bottom: 20px;">
+      Якщо виникнуть будь-які проблеми з оплатою, з вами зв'яжеться менеджер для уточнення деталей.
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="https://forms.gle/j2hVu45YumxtGspE7" target="_blank" class="btn btn-light">
+        Зв’язатися з підтримкою
+      </a>
     </div>
   </div>
 </body>
