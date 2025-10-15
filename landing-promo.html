@@ -137,7 +137,7 @@
 
     <div class="mb-4"><label class="form-label">Вибір дати та часу</label><div id="datesSlots"></div><input type="hidden" id="selectedSlot"><input type="hidden" id="selectedDate"></div>
 
-    <div class="mb-4"><label for="additionalInfo" class="form-label">Коментар</label><textarea class="form-control" id="additionalInfo" rows="3"></textarea></div>
+    <div class="mb-4"><label for="client_additional_text" class="form-label">client_additional_text</label><textarea class="form-control" id="client_additional_text" rows="3"></textarea></div>
     
     <input type="text" class="form-control" id="docID" hidden>
     <input type="text" class="form-control" id="clientID" hidden>
@@ -383,6 +383,7 @@ $('#bookingForm').on('submit', function(e) {
     phone: $('#phone').val(),
     email: $('#email').val(),
     problem: $('#problem').val(),
+    client_additional_text: $('#client_additional_text').val(),
     doctor: $('#doctorName').val(),
     docid: $('#docID').val(),
     date: $('#selectedDate').val(),
