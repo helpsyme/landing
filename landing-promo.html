@@ -206,15 +206,6 @@ $(function() {
     // Если не хватает обязательных параметров — показываем сообщение
     if (missingKeys.length) {
       $('body').children().not('#loadingOverlay').hide();
-      $('body').append(`
-        <div class="container mt-5 d-flex flex-column align-items-center">
-          <h2>На жаль, персональна пропозиція недоступна</h2>
-          <a href="https://forms.gle/j2hVu45YumxtGspE7" target="_blank" 
-            style="display:inline-block; margin-top:20px; padding:12px 30px; background:#9a9a9a; color:#ffffff; font-weight:600; border-radius:12px; text-decoration:none; transition: background 0.3s;">
-            Зв’язатися з підтримкою
-          </a>
-        </div>
-      `);
       // Можно вернуть null, чтобы другие части кода знали, что параметры невалидные
       return null;
     }
