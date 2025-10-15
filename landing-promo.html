@@ -324,27 +324,11 @@ fetch("https://script.google.com/macros/s/AKfycby2biLXh3zPNFudnQYdvsOeMQZzZJ_9QQ
   } else {
     // Если нет слотов
     $('body').children().not('#loadingOverlay').hide();
-    $('body').append(`
-      <div class="container mt-5 text-center">
-
-      </div>
-    `);
   }
 })
 .catch(e => {
   $('#loadingOverlay').addClass('hidden');
   $('body').children().not('#loadingOverlay').hide();
-  $('body').append(`
-    <div class="container mt-5 text-center">
-      <h2>На жаль, персональна пропозиція недоступна</h2>
-      <p>Не вдалося завантажити дані</p>
-      <div class="text-center mt-4">
-        <a href="https://forms.gle/j2hVu45YumxtGspE7" target="_blank" class="btn btn-light">
-          Зв’язатися з підтримкою
-        </a>
-      </div>
-    </div>
-  `);
   console.error(e);
 });
 
