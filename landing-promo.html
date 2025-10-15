@@ -1,4 +1,3 @@
-<!-- file:///Volumes/DEV/GIT/landing/form/doc.html?token=TEST-TOKEN-001&utm_source=google&utm_medium=cpc&utm_campaign=promo_oct&utm_term=спина&utm_content=banner_1 -->
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -10,7 +9,6 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
 
 <style>
-  /* ===== Стили остаются те же ===== */
   :root {
     --color-background-start: #ecedf3; 
     --color-background-end: #d8d8e5;   
@@ -66,7 +64,7 @@
   .btn-primary:hover { background-color:#0066cc; border-color:#0066cc; box-shadow:0 8px 18px rgba(0,122,255,0.35); }
 
   .date-card { border:1px solid var(--color-border-light); border-radius:16px; overflow:hidden; margin-bottom:10px; }
-  .card-header { background-color:var(--color-card); border-bottom:none; font-weight:600; color:var(--color-text-main); padding:14px 20px !important; }
+  .card-header { background-color:var(--color-card); border-bottom:none; font-weight:600; color:var(--color-text-main); padding:14px 20px !important; cursor:pointer; }
   .toggle-icon { font-size:1.2rem; font-weight:700; transition: transform 0.3s; }
   .card-header[aria-expanded="true"] .toggle-icon { transform: rotate(90deg); }
   .card-body { border-top:1px solid var(--color-button-inactive-border); background-color:var(--color-button-inactive); padding:15px 20px; }
@@ -86,15 +84,16 @@
   #loadingOverlay.hidden { display: none; }
 
   .discount-highlight {
-    font-size: 2.5rem;        /* большой размер */
-    font-weight: 900;         /* жирный шрифт */
-    color: #c70039;           /* ярко-красный */
-    text-shadow: 0 0 10px rgba(199,0,57,0.6); /* легкая подсветка */
-    animation: pulse 1.5s infinite; /* пульсация */
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #c70039;
+    text-shadow: 0 0 10px rgba(199,0,57,0.6);
+    animation: pulse 1.5s infinite;
     display: inline-block;
     margin: 0 10px;
   }
 
+  .is-invalid { border-color: #dc3545 !important; box-shadow: none; }
   @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.2); }
@@ -110,7 +109,7 @@
   <form id="bookingForm" autocomplete="off" novalidate>
     <div class="doctor-card">
       <img id="doctorPhoto" src="" alt="Лікар">
-      <input type="text" id="doctorName" class="form-control" value="" disabled>
+      <input type="text" id="doctorName" class="form-control" value="" disabled required>
     </div>
 
     <div class="mb-4 price-block text-center">
@@ -128,26 +127,27 @@
     <!-- Форма -->
     <div class="mb-4"><label for="name" class="form-label">Ім'я</label><input type="text" class="form-control" id="name" required></div>
     <div class="mb-4"><label for="surname" class="form-label">Прізвище</label><input type="text" class="form-control" id="surname" required></div>
-    <div class="mb-4"><label for="patronymic" class="form-label">По батькові (необов'язково)</label><input type="text" class="form-control" id="patronymic"></div>
+    <div class="mb-4"><label for="patronymic" class="form-label">По батькові</label><input type="text" class="form-control" id="patronymic" required></div>
     <div class="mb-4"><label for="birthdate" class="form-label">Дата народження</label><input type="text" class="form-control" id="birthdate" placeholder="дд.мм.рррр" required></div>
     <div class="mb-4"><label for="phone" class="form-label">Телефон</label><input type="tel" class="form-control" id="phone" required></div>
     <div class="mb-4"><label for="email" class="form-label">Email</label><input type="email" class="form-control" id="email" required></div>
 
-    <div class="mb-4"><label class="form-label">Ваше основне питання</label><div id="problemButtons" class="d-flex flex-wrap gap-2"></div><input type="hidden" id="problem"></div>
+    <div class="mb-4"><label class="form-label">Ваше основне питання</label><div id="problemButtons" class="d-flex flex-wrap gap-2"></div><input type="hidden" id="problem" required></div>
 
-    <div class="mb-4"><label class="form-label">Вибір дати та часу</label><div id="datesSlots"></div><input type="hidden" id="selectedSlot"><input type="hidden" id="selectedDate"></div>
+    <div class="mb-4"><label class="form-label">Вибір дати та часу</label><div id="datesSlots"></div><input type="hidden" id="selectedSlot" required><input type="hidden" id="selectedDate" required></div>
 
-    <div class="mb-4"><label for="client_additional_text" class="form-label">Додаткова інформація</label><textarea class="form-control" id="client_additional_text" rows="3"></textarea></div>
+    <div class="mb-4"><label for="client_additional_text" class="form-label">Додаткова інформація</label><textarea class="form-control" id="client_additional_text" rows="3" required></textarea></div>
     
-    <input type="text" class="form-control" id="docID" hidden>
-    <input type="text" class="form-control" id="clientID" hidden>
-    <input type="text" class="form-control" id="priceOld" hidden>
-    <input type="text" class="form-control" id="priceNew" hidden>
-    <input type="text" class="form-control" id="discountPercent" hidden>
+    <input type="text" class="form-control" id="docID" hidden required>
+    <input type="text" class="form-control" id="clientID" hidden required>
+    <input type="text" class="form-control" id="priceOld" hidden required>
+    <input type="text" class="form-control" id="priceNew" hidden required>
+    <input type="text" class="form-control" id="discountPercent" hidden required>
 
     <div class="d-flex justify-content-center"><button type="submit" class="btn btn-primary w-50">Записатися</button></div>
   </form>
 </div>
+
 <!-- СПИННЕР ПРИ ЗАГРУЗКЕ -->
 <div id="loadingOverlay">
   <div class="spinner-border text-primary" role="status">
@@ -155,6 +155,7 @@
   </div>
   <div class="mt-3 text-primary fw-bold">Завантаження...</div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.9/jquery.inputmask.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -162,10 +163,6 @@
 
 <script>
 $(function() {
-
-  // --- Параметры ---
-  const requiredKeys = ['token']; // обязательные
-  const optionalKeys = ['utm_source','utm_medium','utm_campaign','utm_term']; // необязательные
 
   // --- Маски ---
   Inputmask({ mask: "99.99.9999" }).mask($('#birthdate'));
@@ -188,217 +185,139 @@ $(function() {
   // --- Получение URL параметров ---
   function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
-    const result = {};
-    const missingKeys = [];
-
-    // Проверяем обязательные ключи
-    requiredKeys.forEach(k => {
-      const value = params.get(k);
-      if (!value) missingKeys.push(k);
-      result[k] = value || '';
-    });
-
-    // Проверяем необязательные ключи
-    optionalKeys.forEach(k => {
-      result[k] = params.get(k) || '';
-    });
-
-    // Если не хватает обязательных параметров — показываем сообщение
-    if (missingKeys.length) {
-      $('body').children().not('#loadingOverlay').hide();
-      // Можно вернуть null, чтобы другие части кода знали, что параметры невалидные
-      return null;
-    }
-
-    return result;
+    return { token: params.get('token') || "" };
   }
+  let urlParams = getUrlParams();
 
-  let urlParams;
-  try {
-    urlParams = getUrlParams();
-    console.log('URL params:', urlParams);
-  } catch(err) {
+  // --- Запрос к API для заполнения страницы ---
+  fetch("https://script.google.com/macros/s/AKfycby2biLXh3zPNFudnQYdvsOeMQZzZJ_9QQdLzuQsyWcGILydK7Oajry6EmXleqJf0pfGIg/exec", {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ init: 1, ...urlParams })
+  })
+  .then(r => r.json())
+  .then(resp => {
     $('#loadingOverlay').addClass('hidden');
-    toastr.error(err.message);
-    return; // останавливаем дальнейшую загрузку
-  }
-
-// --- Запрос к API для заполнения страницы ---
-$('#loadingOverlay').removeClass('hidden');
-
-// --- Запрос к API для заполнения страницы ---
-$('#loadingOverlay').removeClass('hidden');
-
-// --- Запрос к API для заполнения страницы ---
-$('#loadingOverlay').removeClass('hidden');
-
-fetch("https://script.google.com/macros/s/AKfycby2biLXh3zPNFudnQYdvsOeMQZzZJ_9QQdLzuQsyWcGILydK7Oajry6EmXleqJf0pfGIg/exec", {
-  method: 'POST',
-  headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-  body: JSON.stringify({ init: 1, ...urlParams })
-})
-.then(r => r.json())
-.then(resp => {
-  $('#loadingOverlay').addClass('hidden');
-  console.log("data:", resp);
-
-
-
-  const page = resp;
-  // --- Если статус внутри данных не success ---
-  if (!page || page.status !== 'success') {
-    $('body').children().not('#loadingOverlay').hide();
-    $('body').append(`
-      <div class="container mt-5 d-flex flex-column align-items-center">
+    if (!resp || resp.status !== 'success') {
+      $('body').children().not('#loadingOverlay').hide();
+      $('body').append(`<div class="container mt-5 d-flex flex-column align-items-center">
           <h2>На жаль, персональна пропозиція недоступна</h2>
-          <div class="text-center mt-4">
-            <a href="https://forms.gle/j2hVu45YumxtGspE7" target="_blank" class="btn btn-light">
-              Зв’язатися з підтримкою
-            </a>
-          </div>
-        </div>
-    `);
-    return;
-  }
-
-  // --- Если success, заполняем страницу ---
-  if(page.doctorName) $('#doctorName').val(page.doctorName);
-  if(page.doctorPhoto) $('#doctorPhoto').attr('src', page.doctorPhoto);
-  if(page.priceNew) $('.price-new').text(page.priceNew);
-  if(page.priceOld) $('.price-old').text(page.priceOld);
-  if(page.clientID) $('#clientID').val(page.clientID);
-  if(page.docID) $('#docID').val(page.docID);
-  
-  
-  if (page.discountPercent) {
-      $('#discount').text(`${page.discountPercent}%`);
+          <a href="https://forms.gle/j2hVu45YumxtGspE7" target="_blank" class="btn btn-light mt-3">Зв’язатися з підтримкою</a>
+      </div>`);
+      return;
     }
 
-  if (page.priceNew) $('#priceNew').val(page.priceNew);
-  if (page.priceOld) $('#priceOld').val(page.priceOld);
-  if (page.discountPercent) $('#discountPercent').val(page.discountPercent);
-  
-  // проверяем
-  console.log('docID =', $('#docID').val());
-  console.log('clientID =', $('#clientID').val());
-  console.log('priceNew =', $('#priceNew').val());
-  console.log('priceOld =', $('#priceOld').val());
-  console.log('discountPercent =', $('#discountPercent').val());
-  
-  if(page.dates && page.dates.length) {
-    const datesContainer = $('#datesSlots').empty();
-    page.dates.forEach(d => {
-      const collapseId = 'collapse_' + d.date.replace(/-/g,'');
-      const card = $(`
-        <div class="card mb-2 date-card">
-          <div class="card-header d-flex justify-content-between align-items-center" 
-              data-bs-toggle="collapse" data-bs-target="#${collapseId}">
-            <span>${d.date}</span><span class="toggle-icon">▸</span>
+    $('#doctorName').val(resp.doctorName);
+    $('#doctorPhoto').attr('src', resp.doctorPhoto);
+    $('.price-new').text(resp.priceNew);
+    $('.price-old').text(resp.priceOld);
+    $('#clientID').val(resp.clientID);
+    $('#docID').val(resp.docID);
+    $('#priceNew').val(resp.priceNew);
+    $('#priceOld').val(resp.priceOld);
+    $('#discountPercent').val(resp.discountPercent);
+    $('#discount').text(`${resp.discountPercent}%`);
+
+    if(resp.dates && resp.dates.length) {
+      const datesContainer = $('#datesSlots').empty();
+      resp.dates.forEach(d => {
+        const collapseId = 'collapse_' + d.date.replace(/-/g,'');
+        const card = $(`
+          <div class="card mb-2 date-card">
+            <div class="card-header d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#${collapseId}">
+              <span>${d.date}</span><span class="toggle-icon">▸</span>
+            </div>
+            <div id="${collapseId}" class="collapse">
+              <div class="card-body d-flex flex-wrap gap-2"></div>
+            </div>
           </div>
-          <div id="${collapseId}" class="collapse">
-            <div class="card-body d-flex flex-wrap gap-2"></div>
-          </div>
-        </div>
-      `);
-      d.slots.forEach(slot => {
-        const btn = $(`<button type="button" class="btn btn-outline-success btn-sm">${slot}</button>`);
-        btn.on('click', function() {
-          $('.date-card .card-body button').removeClass('active');
-          $('#selectedDate').val(d.date);
-          $('#selectedSlot').val(slot);
-          $(this).addClass('active');
+        `);
+        d.slots.forEach(slot => {
+          const btn = $(`<button type="button" class="btn btn-outline-success btn-sm">${slot}</button>`);
+          btn.on('click', function() {
+            $('.date-card .card-body button').removeClass('active');
+            $('#selectedDate').val(d.date);
+            $('#selectedSlot').val(slot);
+            $(this).addClass('active');
+          });
+          card.find('.card-body').append(btn);
         });
-        card.find('.card-body').append(btn);
+        datesContainer.append(card);
       });
-      datesContainer.append(card);
-    });
-  } else {
-    // Если нет слотов
+    }
+  })
+  .catch(e => {
+    $('#loadingOverlay').addClass('hidden');
     $('body').children().not('#loadingOverlay').hide();
-  }
-})
-.catch(e => {
-  $('#loadingOverlay').addClass('hidden');
-  $('body').children().not('#loadingOverlay').hide();
-  console.error(e);
-});
-
-// --- Функция для парсинга UTM из URL ---
-function getUTMParams() {
-  const params = new URLSearchParams(window.location.search);
-  return {
-    utm_source: params.get('utm_source') || "",
-    utm_medium: params.get('utm_medium') || "",
-    utm_campaign: params.get('utm_campaign') || "",
-    utm_term: params.get('utm_term') || "",
-    utm_content: params.get('utm_content') || ""
-  };
-}
-
-// --- Сабмит формы ---
-$('#bookingForm').on('submit', function(e) {
-  e.preventDefault();
-
-  const btn = $(this).find('button[type=submit]');
-  const oldText = btn.html();
-  btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span> Відправка...');
-
-  // Собираем данные формы
-  const formData = {
-    first_name: $('#name').val(),
-    last_name: $('#surname').val(),
-    middle_name: $('#patronymic').val(),
-    birthdate: $('#birthdate').val(),
-    phone: $('#phone').val(),
-    email: $('#email').val(),
-    problem: $('#problem').val(),
-    client_additional_text: $('#client_additional_text').val(),
-    doctor: $('#doctorName').val(),
-    docid: $('#docID').val(),
-    date: $('#selectedDate').val(),
-    slot: $('#selectedSlot').val(),
-    priceold: $('#priceOld').val(),
-    pricenew: $('#priceNew').val(),
-    discountpercent: $('#discountPercent').val(),
-    token: urlParams.token || "",
-    clientid: $('#clientID').val(),
-  };
-  console.log("formData:" + formData);
-  // Добавляем UTM-метки
-  const utmData = getUTMParams();
-
-  // Формируем итоговый payload
-  const payload = { ...formData, ...utmData };
-
-  fetch('https://script.google.com/macros/s/AKfycbzdYVR7l79ww1w2v2IygQT4kqbMGIOdPhSDOxbIXEyOYYa52mD2T2qedisemirooLyanQ/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
-  })
-  .then(response => response.json())
-  .then(res => {
-      console.log("Ответ API:", res); // выводим полный ответ для отладки
-
-      if (res.status === 'success') {
-          toastr.success("Форма успішно відправлена!");
-          $('#bookingForm')[0].reset();
-          $('.btn-outline-primary, .btn-outline-success').removeClass('active');
-          window.location.href = "/form-end"; // редирект только при успехе
-      } else if (res.status === 'error' && res.message && res.message.includes('цей час вже зайнятий')) {
-          // слот занят
-          toastr.error(res.message);
-      } else {
-          toastr.error(res.message || "Помилка при обробці заявки");
-      }
-  })
-  .catch(err => {
-      console.error("Ошибка запроса:", err); // выводим ошибку запроса
-      toastr.error("Не вдалося відправити заявку");
-  })
-  .finally(() => {
-      btn.prop('disabled', false).html(oldText);
+    console.error(e);
   });
-});
+
+  // --- Сабмит формы с проверкой всех обязательных полей ---
+  $('#bookingForm').on('submit', function(e) {
+    e.preventDefault();
+    const btn = $(this).find('button[type=submit]');
+    const oldText = btn.html();
+    btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span> Відправка...');
+
+    // Проверка всех обязательных полей
+    let missing = [];
+    $('#bookingForm [required]').each(function() {
+        if (!$(this).val()) missing.push($(this).attr('id'));
+        if (!$(this).val()) $(this).addClass('is-invalid');
+        else $(this).removeClass('is-invalid');
+    });
+
+    if (missing.length) {
+      toastr.error("Заповніть усі обов'язкові поля!");
+      btn.prop('disabled', false).html(oldText);
+      return;
+    }
+
+    // Собираем данные формы
+    const formData = {
+      first_name: $('#name').val(),
+      last_name: $('#surname').val(),
+      middle_name: $('#patronymic').val(),
+      birthdate: $('#birthdate').val(),
+      phone: $('#phone').val(),
+      email: $('#email').val(),
+      problem: $('#problem').val(),
+      client_additional_text: $('#client_additional_text').val(),
+      doctor: $('#doctorName').val(),
+      docid: $('#docID').val(),
+      date: $('#selectedDate').val(),
+      slot: $('#selectedSlot').val(),
+      priceold: $('#priceOld').val(),
+      pricenew: $('#priceNew').val(),
+      discountpercent: $('#discountPercent').val(),
+      token: urlParams.token || "",
+      clientid: $('#clientID').val(),
+    };
+
+    fetch('https://script.google.com/macros/s/AKfycbzdYVR7l79ww1w2v2IygQT4kqbMGIOdPhSDOxbIXEyOYYa52mD2T2qedisemirooLyanQ/exec', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(res => {
+        if (res.status === 'success') {
+            toastr.success("Форма успішно відправлена!");
+            $('#bookingForm')[0].reset();
+            $('.btn-outline-primary, .btn-outline-success').removeClass('active');
+            window.location.href = "/form-end";
+        } else {
+            toastr.error(res.message || "Помилка при обробці заявки");
+        }
+    })
+    .catch(err => {
+        toastr.error("Не вдалося відправити заявку");
+        console.error(err);
+    })
+    .finally(() => {
+        btn.prop('disabled', false).html(oldText);
+    });
+  });
 
 });
 </script>
