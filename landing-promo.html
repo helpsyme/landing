@@ -253,7 +253,7 @@ $(function() {
   });
 
   // --- Сабмит формы с проверкой всех обязательных полей ---
-  $('#bookingForm').on('submit', function(e) {
+$('#bookingForm').on('submit', function(e) {
     e.preventDefault();
     const btn = $(this).find('button[type=submit]');
     const oldText = btn.html();
@@ -262,36 +262,45 @@ $(function() {
     // Проверка всех обязательных полей
     let missing = [];
     $('#bookingForm [required]').each(function() {
-        if (!$(this).val()) missing.push($(this).attr('id'));
-        if (!$(this).val()) $(this).addClass('is-invalid');
+        if (!$(this).val() || $(this).val().trim() === '') missing.push($(this).attr('id'));
+        if (!$(this).val() || $(this).val().trim() === '') $(this).addClass('is-invalid');
         else $(this).removeClass('is-invalid');
     });
 
+    // Проверяем выбор основного вопроса и даты/слота
+    if (!$('#problem').val()) {
+        missing.push('problem');
+        toastr.error("Виберіть Ваше основне питання!");
+    }
+    if (!$('#selectedDate').val() || !$('#selectedSlot').val()) {
+        missing.push('selectedSlot');
+        toastr.error("Виберіть дату та час!");
+    }
+
     if (missing.length) {
-      toastr.error("Заповніть усі обов'язкові поля!");
-      btn.prop('disabled', false).html(oldText);
-      return;
+        btn.prop('disabled', false).html(oldText);
+        return;
     }
 
     // Собираем данные формы
     const formData = {
-      first_name: $('#name').val(),
-      last_name: $('#surname').val(),
-      middle_name: $('#patronymic').val(),
-      birthdate: $('#birthdate').val(),
-      phone: $('#phone').val(),
-      email: $('#email').val(),
-      problem: $('#problem').val(),
-      client_additional_text: $('#client_additional_text').val(),
-      doctor: $('#doctorName').val(),
-      docid: $('#docID').val(),
-      date: $('#selectedDate').val(),
-      slot: $('#selectedSlot').val(),
-      priceold: $('#priceOld').val(),
-      pricenew: $('#priceNew').val(),
-      discountpercent: $('#discountPercent').val(),
-      token: urlParams.token || "",
-      clientid: $('#clientID').val(),
+        first_name: $('#name').val(),
+        last_name: $('#surname').val(),
+        middle_name: $('#patronymic').val(),
+        birthdate: $('#birthdate').val(),
+        phone: $('#phone').val(),
+        email: $('#email').val(),
+        problem: $('#problem').val(),
+        client_additional_text: $('#client_additional_text').val(),
+        doctor: $('#doctorName').val(),
+        docid: $('#docID').val(),
+        date: $('#selectedDate').val(),
+        slot: $('#selectedSlot').val(),
+        priceold: $('#priceOld').val(),
+        pricenew: $('#priceNew').val(),
+        discountpercent: $('#discountPercent').val(),
+        token: urlParams.token || "",
+        clientid: $('#clientID').val(),
     };
 
     fetch('https://script.google.com/macros/s/AKfycbzdYVR7l79ww1w2v2IygQT4kqbMGIOdPhSDOxbIXEyOYYa52mD2T2qedisemirooLyanQ/exec', {
@@ -317,7 +326,7 @@ $(function() {
     .finally(() => {
         btn.prop('disabled', false).html(oldText);
     });
-  });
+});
 
 });
 </script>
