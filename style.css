@@ -5,28 +5,34 @@
   --color-background-start: #ecedf3;
   --color-background-end: #d8d8e5;
   --color-card: #ffffff;
-  --color-text-main: #1c1c1e;
+  --color-text-main: #2c2c2e;
   --color-text-subtle: #8e8e93;
   --color-accent-blue: #007aff;
   --color-light-blue-bg: #f0f7ff;
   --color-border-light: #c8c8d3;
   --color-shadow: rgba(0,0,0,0.08);
   --color-price-final: #c70039;
+  --color-price-new-bold: #c70039;
   --color-discount-badge: #ff3b30;
   --color-success: #34c759;
   --color-price-gradient-start: #e1e9ff;
   --color-price-gradient-end: #f5f8ff;
   --color-price-old-subtle: #9999a0;
+  --color-focus-shadow: rgba(0, 122, 255, 0.2);
+  --color-button-inactive: #f7f7f9;
+  --color-button-inactive-border: #e0e0e5;
+  --color-price-block-shadow: rgba(0, 122, 255, 0.25);
 }
 
 /* ===== Базовые стили ===== */
 body {
-  background: repeating-linear-gradient(-45deg, rgba(0,0,0,0.05), rgba(0,0,0,0.05) 1px, transparent 1px, transparent 20px),
-              linear-gradient(150deg, var(--color-background-start) 0%, var(--color-background-end) 100%);
+  background: 
+    repeating-linear-gradient(-45deg, rgba(0,0,0,0.05), rgba(0,0,0,0.05) 1px, transparent 1px, transparent 20px),
+    linear-gradient(150deg, var(--color-background-start) 0%, var(--color-background-end) 100%);
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   color: var(--color-text-main);
   line-height: 1.6;
-  padding: 40px 20px;
+  padding: 30px 20px;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -44,29 +50,95 @@ body {
 
 /* ===== Заголовки ===== */
 h1 {
-  font-weight: 800;
-  margin-bottom: 40px;
-  font-size: 2.4rem;
-  text-align: center;
+  font-weight: 700;
   color: var(--color-text-main);
+  text-align: center;
+  margin-bottom: 35px;
+  font-size: 2.2rem;
   text-shadow: 0 1px 0 rgba(255,255,255,0.7);
 }
 
-/* ========================================================= */
-/* ===== СТРАНИЦА: ОПЛАТА (.page-payment) ===== */
-/* ========================================================= */
+/* ===== Формы ===== */
+form {
+  background-color: var(--color-card);
+  border-radius: 28px;
+  padding: 35px;
+  box-shadow: 0 10px 30px var(--color-shadow);
+  border: 1px solid var(--color-border-light);
+}
+label {
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+.form-control {
+  border-radius: 12px;
+  border: 1px solid var(--color-border-light);
+  padding: 12px 18px;
+  font-size: 1rem;
+  background-color: var(--color-button-inactive);
+}
+.form-control:focus {
+  border-color: var(--color-accent-blue);
+  box-shadow: 0 0 0 3px var(--color-focus-shadow);
+  background-color: var(--color-card);
+}
+.form-control[disabled] {
+  background-color: transparent;
+  color: var(--color-text-main);
+  font-weight: 700;
+  border: none;
+  text-align: center;
+  padding: 0;
+  font-size: 1.2rem;
+}
+
+/* ===== Кнопки ===== */
+.btn-outline-primary, .btn-outline-success {
+  border-radius: 20px;
+  font-weight: 500;
+  padding: 8px 16px;
+  transition: all 0.2s;
+  border: 1px solid var(--color-button-inactive-border);
+  color: var(--color-text-main);
+  background-color: var(--color-button-inactive);
+}
+.btn-outline-primary.active, .btn-outline-success.active {
+  color: #fff !important;
+  background-color: var(--color-accent-blue) !important;
+  border-color: var(--color-accent-blue) !important;
+  box-shadow: 0 2px 5px rgba(0,122,255,0.3);
+}
+.btn-primary {
+  border-radius: 16px;
+  font-weight: 600;
+  background-color: var(--color-accent-blue);
+  border-color: var(--color-accent-blue);
+  padding: 14px 20px;
+  font-size: 1.05rem;
+  box-shadow: 0 5px 15px rgba(0,122,255,0.25);
+}
+.btn-primary:hover {
+  background-color: #0066cc;
+  border-color: #0066cc;
+  box-shadow: 0 8px 18px rgba(0,122,255,0.35);
+}
+
+/* ===== Страница оплаты ===== */
 .page-payment .price-block {
   background: linear-gradient(135deg, var(--color-price-gradient-start), var(--color-price-gradient-end));
-  border-radius: 24px;
-  padding: 35px 25px;
-  box-shadow: 0 8px 25px rgba(0, 122, 255, 0.12);
+  border-radius: 28px;
+  padding: 35px 30px;
+  margin-bottom: 40px;
+  box-shadow: 0 15px 35px var(--color-price-block-shadow);
   border: 1px solid #a8c4ff;
-  margin-bottom: 50px;
+  transition: all 0.3s ease-in-out;
 }
 .page-payment .price-new {
   font-size: 3.5rem;
   font-weight: 900;
-  color: var(--color-price-final);
+  color: var(--color-price-new-bold);
 }
 .page-payment .discount-badge {
   background: var(--color-discount-badge);
@@ -114,21 +186,12 @@ h1 {
   transform: translate(-50%, -60%) scale(1);
 }
 
-/* ========================================================= */
-/* ===== СТРАНИЦА: ФОРМА ВРАЧА (.page-form) ===== */
-/* ========================================================= */
-.page-form form {
-  background-color: var(--color-card);
-  border-radius: 28px;
-  padding: 35px;
-  box-shadow: 0 10px 30px var(--color-shadow);
-  border: 1px solid var(--color-border-light);
-}
-.page-form .doctor-card {
+/* ===== Докторская карточка ===== */
+.doctor-card {
   text-align: center;
   margin-bottom: 30px;
 }
-.page-form .doctor-card img {
+.doctor-card img {
   width: 140px;
   height: 140px;
   object-fit: cover;
@@ -138,26 +201,38 @@ h1 {
   box-shadow: 0 4px 10px var(--color-shadow);
 }
 
-/* ========================================================= */
-/* ===== СТРАНИЦА: СТАТУС (.page-status) ===== */
-/* ========================================================= */
-.page-status .status-icon {
-  font-size: 64px;
-  color: var(--color-accent-blue);
-  margin-bottom: 20px;
-}
-.page-status .note {
-  font-size: 0.9rem;
-  color: #666;
-  margin-top: 25px;
-  padding: 15px;
-  background: #f8f9ff;
-  border-radius: 12px;
-  border: 1px solid #e0e0f0;
-}
+/* ===== Таймслоты, карточки дат ===== */
+.date-card { border: 1px solid var(--color-border-light); border-radius: 16px; overflow: hidden; margin-bottom: 10px; }
+.card-header { background-color: var(--color-card); border-bottom: none; font-weight: 600; color: var(--color-text-main); padding: 14px 20px !important; cursor: pointer; }
+.toggle-icon { font-size: 1.2rem; font-weight: 700; transition: transform 0.3s; }
+.card-header[aria-expanded="true"] .toggle-icon { transform: rotate(90deg); }
+.card-body { border-top: 1px solid var(--color-button-inactive-border); background-color: var(--color-button-inactive); padding: 15px 20px; }
 
-/* ===== Мобайл адаптив ===== */
-@media (max-width: 767px) {
-  .container { width: 100%; padding: 20px; border-radius: 0; box-shadow: none; }
-  h1 { font-size: 32px; }
+/* ===== Toast, загрузка, анимации ===== */
+#toast-container { z-index: 10800; }
+#loadingOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.9);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#loadingOverlay.hidden { display: none; }
+.discount-highlight {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--color-price-final);
+  text-shadow: 0 0 10px rgba(199,0,57,0.6);
+  animation: pulse 1.5s infinite;
+  display: inline-block;
+  margin: 0 10px;
+}
+.is-invalid { border-color: #dc3545 !important; box-shadow: none; }
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Персональна пропозиція та Запис</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="promostyle.css">
+
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="shadow z-3" style="background-color: var(--header-bg) !important;">
+    <nav class="navbar navbar-expand-md py-4 navbar-dark-text">
+      <div class="container-xl px-4 px-sm-5 px-lg-4">
+        <div class="navbar-brand d-flex flex-column py-0">
+          <span class="uk-logo">Helpsy</span>
+          <span class="uk-logo-sub d-none d-sm-block">
+            Підтримка вашого ментального здоров'я
+          </span>
+        </div>
+
+        <button class="navbar-toggler p-2 rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <svg class="h-6 w-6" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-md-0 align-items-md-center">
+            <li class="nav-item">
+              <a class="nav-link btn fw-bold px-4 py-2 text-white rounded" href="https://psikhiatr-onlayn.kiev.ua"
+                style="background-color: #39f;"> <!-- цвет логотипа -->
+                Консультація лікаря онлайн
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="container">
+    <h1>Запис на онлайн консультацію</h1>
+
+    <form id="bookingForm" autocomplete="off" novalidate>
+      <div class="doctor-card">
+        <img id="doctorPhoto" src="https://psikhiatr-onlayn.kiev.ua/assets/img/doc/md_kotenko.jpeg" alt="Лікар">
+        <p>Лікар психіатр</p>
+        <h1 class="display-6">Котенко Анастасія Олександрівна</h1>
+      </div>
+
+      <!-- Форма -->
+      
+      <div class="mb-4"><label for="surname" class="form-label">Прізвище</label><input type="text" class="form-control"
+          id="surname" required></div>
+      <div class="mb-4">
+        <label for="name" class="form-label">Ім'я</label>
+        <input type="text" class="form-control" id="name" required>
+      </div>
+      <div class="mb-4"><label for="patronymic" class="form-label">По батькові</label><input type="text"
+          class="form-control" id="patronymic" required></div>
+      <div class="mb-4"><label for="birthdate" class="form-label">Дата народження</label><input type="text"
+          class="form-control" id="birthdate" placeholder="дд.мм.рррр" required></div>
+      <div class="mb-4"><label for="phone" class="form-label">Телефон</label><input type="tel" class="form-control"
+          id="phone" required></div>
+      <div class="mb-4"><label for="email" class="form-label">Email</label><input type="email" class="form-control"
+          id="email" required></div>
+
+      <div class="mb-4"><label class="form-label">Ваше основне питання</label>
+        <div id="problemButtons" class="d-flex flex-wrap gap-2"></div><input type="hidden" id="problem" required>
+      </div>
+      <div class="mb-4"><label for="client_additional_text" class="form-label">Додаткова інформація</label><textarea
+          class="form-control" id="client_additional_text" rows="3" required></textarea></div>
+
+
+      <div class="d-flex justify-content-center"><button type="submit" class="btn btn-primary w-80">Обрати дату та час
+          консультації</button></div>
+    </form>
+  </div>
+
+  <!-- СПИННЕР ПРИ ЗАГРУЗКЕ -->
+  <div id="loadingOverlay" style="display: none;">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Завантаження...</span>
+    </div>
+    <div class="mt-3 text-primary fw-bold">Завантаження...</div>
+  </div>
+
+  <footer class="footer bg-dark mt-auto py-5">
+    <div class="container-xl px-4 px-sm-5 px-lg-4">
+      <div class="row g-4 text-sm footer-content">
+
+        <div class="col-md-3 col-12 text-md-start text-center">
+          <span class="uk-logo d-block">Helpsy</span>
+          <span class="uk-logo-sub d-block">Підтримка вашого ментального здоров'я</span>
+          <p class="mt-2 text-footer">
+            Наша місія — зробити психологічну підтримку доступною та зрозумілою для кожного.
+          </p>
+          <p class="text-footer small mb-0">v.2.1</p>
+        </div>
+
+        <div class="col-md-9 d-flex flex-wrap justify-content-end gap-4 footer-links text-md-end text-center">
+
+          <div class="col-md-3 col-12">
+            <h4 class="fs-5 fw-bold text-white mb-3">Допомога</h4>
+            <ul class="list-unstyled mb-0">
+              <li>
+                <a href="https://psytests.psikhiatr-onlayn.kiev.ua/pp" target="_blank" rel="noopener noreferrer"
+                  class="footer-link">Політика конфіденційності</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-md-3 col-12">
+            <h4 class="fs-5 fw-bold text-white mb-3">Контакти</h4>
+            <p>
+              <a href="https://forms.gle/BubikRYKUbMaEMLb8" target="_blank" class="footer-link">Звернутися
+                до нас</a>
+            </p>
+            <p class="footer-link mb-0">+38(044)338-26-53</p>
+          </div>
+
+          <div class="col-md-3 col-12">
+            <h4 class="fs-5 fw-bold text-white mb-3">Ми посилаємось на</h4>
+            <div class="d-flex flex-column align-items-center align-items-md-start gap-2">
+              <img src="img/moz.webp" alt="Логотип МОЗ" class="footer-logo img-fluid mb-2">
+              <img src="img/who.webp" alt="Логотип ВООЗ" class="footer-logo img-fluid mb-2">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.9/jquery.inputmask.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+  <script>
+    $(function () {
+      // --- Маски ---
+      Inputmask({ mask: "99.99.9999" }).mask($('#birthdate'));
+      Inputmask({ mask: "+38(999)999-99-99" }).mask($('#phone'));
+      Inputmask({ alias: "email" }).mask($('#email'));
+
+      // --- Проблемы ---
+      const problems = ['Депресія', 'Тривожно-фобiчнi розлади', 'ОКР', 'Розлади харчування', 'Інше'];
+      const problemContainer = $('#problemButtons');
+      problems.forEach(p => {
+        const btn = $(`<button type="button" class="btn btn-outline-primary btn-sm">${p}</button>`);
+        btn.on('click', function () {
+          $('#problem').val(p);
+          problemContainer.find('button').removeClass('active');
+          $(this).addClass('active');
+        });
+        problemContainer.append(btn);
+      });
+
+      // --- Получение URL параметров ---
+      function getUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        return { token: params.get('token') || "" };
+      }
+      let urlParams = getUrlParams();
+
+      // --- Сабмит формы с проверкой всех обязательных полей ---
+      $('#bookingForm').on('submit', function (e) {
+        e.preventDefault();
+        const btn = $(this).find('button[type=submit]');
+        const oldText = btn.html();
+        btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span> Відправка...');
+
+        // Проверка всех обязательных полей
+        let missing = [];
+        $('#bookingForm [required]').each(function () {
+          if (!$(this).val() || $(this).val().trim() === '') missing.push($(this).attr('id'));
+          if (!$(this).val() || $(this).val().trim() === '') $(this).addClass('is-invalid');
+          else $(this).removeClass('is-invalid');
+        });
+
+        // Проверяем выбор основного вопроса и даты/слота
+        if (!$('#problem').val()) {
+          missing.push('problem');
+          toastr.error("Виберіть Ваше основне питання!");
+        }
+        if (!$('#selectedDate').val() || !$('#selectedSlot').val()) {
+          missing.push('selectedSlot');
+          toastr.error("Виберіть дату та час!");
+        }
+
+        if (missing.length) {
+          btn.prop('disabled', false).html(oldText);
+          return;
+        }
+
+        // Собираем данные формы
+        const formData = {
+          first_name: $('#name').val(),
+          last_name: $('#surname').val(),
+          middle_name: $('#patronymic').val(),
+          birthdate: $('#birthdate').val(),
+          phone: $('#phone').val(),
+          email: $('#email').val(),
+          problem: $('#problem').val(),
+          client_additional_text: $('#client_additional_text').val(),
+          doctor: $('#doctorName').val(),
+          docid: $('#docID').val(),
+          date: $('#selectedDate').val(),
+          slot: $('#selectedSlot').val(),
+          priceold: $('#priceOld').val(),
+          pricenew: $('#priceNew').val(),
+          discountpercent: $('#discountPercent').val(),
+          token: urlParams.token || "",
+          clientid: $('#clientID').val(),
+        };
+
+        fetch('https://script.google.com/macros/s/AKfycbzdYVR7l79ww1w2v2IygQT4kqbMGIOdPhSDOxbIXEyOYYa52mD2T2qedisemirooLyanQ/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(formData)
+        })
+          .then(response => response.json())
+          .then(res => {
+            if (res.status === 'success') {
+              toastr.success("Форма успішно відправлена!");
+              $('#bookingForm')[0].reset();
+              $('.btn-outline-primary, .btn-outline-success').removeClass('active');
+              window.location.href = "/form-end";
+            } else {
+              toastr.error(res.message || "Помилка при обробці заявки");
+            }
+          })
+          .catch(err => {
+            toastr.error("Не вдалося відправити заявку");
+            console.error(err);
+          })
+          .finally(() => {
+            btn.prop('disabled', false).html(oldText);
+          });
+      });
+
+    });
+  </script>
+</body>
+
+</html>

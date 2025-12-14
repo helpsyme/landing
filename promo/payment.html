@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Дякуємо за бронювання - Оплата (з попапом)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="promostyle.css">
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="shadow z-3" style="background-color: var(--header-bg) !important;">
+    <nav class="navbar navbar-expand-md py-4 navbar-dark-text">
+      <div class="container-xl px-4 px-sm-5 px-lg-4">
+        <div class="navbar-brand d-flex flex-column py-0">
+          <span class="uk-logo">Helpsy</span>
+          <span class="uk-logo-sub d-none d-sm-block">
+            Підтримка вашого ментального здоров'я
+          </span>
+        </div>
+
+        <button class="navbar-toggler p-2 rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <svg class="h-6 w-6" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-md-0 align-items-md-center">
+            <li class="nav-item">
+              <a class="nav-link btn fw-bold px-4 py-2 text-white rounded" href="https://psikhiatr-onlayn.kiev.ua"
+                style="background-color: #39f;"> <!-- цвет логотипа -->
+                Консультація лікаря онлайн
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="main-content">
+    <div class="container payment-content-block">
+      <h1>🎉 Бронювання часу підтверджено!</h1>
+      <div class="alert alert-light text-center fw-bold mt-4 p-3 mb-5" role="alert" style="border-radius: 12px;">
+    **❗ Увага: Час на оплату обмежений!**
+    <br>
+    Ваше бронювання дати та часу утримується лише **15 хвилин**.
+    <br>
+    Будь ласка, завершіть оплату протягом цього часу, інакше бронь буде автоматично знята.
+</div>
+      <!-- REGULAR PRICE -->
+    <div class="price-block regular-price-style">
+        <div class="price-label">Вартість консультації</div>
+        <div class="price-new-wrapper">
+            <div class="price-new">1500 грн</div>
+        </div>
+        <p class="discount-note" style="border-top: block;">
+            Оплата здійснюється повним переказом.
+        </p>
+    </div>
+      <!-- PROMOCODE PRICE -->
+      <div class="price-block" style="display: block;">
+        <div class="price-old-details">
+          <div class="original-price-info">Звичайна ціна: <span class="price-old">1500 грн</span></div>
+        </div>
+        <div class="price-new-wrapper">
+          <div class="price-new">0 грн</div>
+        </div>
+        <p class="discount-note">Застосовано <strong>персональну знижку</strong>, зафіксуйте ціну зараз!</p>
+      </div>
+
+      <!-- ENTER PROMOCODE -->
+      <div class="mb-5">
+        <label for="promoCodeInput" class="form-label text-start fw-bold promo-label">Активувати промокод</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="promoCodeInput" placeholder="Введіть промокод">
+          <button class="btn btn-primary promo-activate-btn" type="button" id="applyPromoBtn">
+            Активувати
+          </button>
+        </div>
+      </div>
+      <div class="card-action-block">
+        <h2 class="h5 text-start mb-3" style="font-weight:700; padding-left:5px; color:var(--color-text-main);">
+          <span class="step-number">1</span> Здійсніть переказ
+        </h2>
+
+        <div class="card-wrapper">
+          <div class="card-visual" role="group" aria-label="Номер картки для оплати">
+            <div class="card-chip" aria-hidden="true"></div>
+            <input id="cardNumberInput" class="card-number-input" type="text" maxlength="19" value="0000 0000 0000 0000"
+              aria-label="Номер картки" readonly />
+            <div class="card-number-hint" id="cardHint">Натисніть на номер, щоб скопіювати.</div>
+          </div>
+
+          <div class="payment-instruction-block">
+            <p>Перекажіть суму <strong class="price-new-text">0 грн</strong> на вказану вище картку.</p>
+            <p><strong>ОБОВ'ЯЗКОВО:</strong> додайте у коментар до платежу ваш персональний промокод:</p>
+            <div class="promo-code-box" id="promoCodeBox" role="button" aria-pressed="false">000000</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="payment-text">
+        <h2 class="h5 text-start mb-3" style="font-weight:700; color:var(--color-text-main);">
+          <span class="step-number">2</span> Завантажте квитанцію
+        </h2>
+        <p><b>Наступний крок:</b> Для завершення бронювання вам необхідно здійснити оплату та <b>завантажити
+            квитанцію</b>.</p>
+        <p>Після завантаження квитанції на ваш email надійде лист із посиланням на онлайн-консультацію та всією
+          контактною інформацією.</p>
+        <div class="warning-box">
+          <b>⚠️ Умови скасування консультації:</b>
+          <p style="margin:5px 0;">Якщо ви скасовуєте консультацію за 24 години або раніше, вся оплачена сума
+            повертається протягом 3-х банківських днів.</p>
+          <p style="margin:0;">Якщо скасування відбувається пізніше ніж за 24 години, або ви не з'являєтесь, або
+            запізнюєтесь більше ніж на 15 хвилин, консультація вважається проведеною.</p>
+        </div>
+      </div>
+
+      <div class="mt-5">
+        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+          Завантажити квитанцію про оплату
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🌟 Модальне вікно завантаження квитанції -->
+  <div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow-lg border-0" style="border-radius: 20px; overflow: hidden;">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title fw-bold">📎 Завантаження квитанції</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="uploadForm">
+            <!-- 🔥 Сховане поле ID -->
+            <input type="hidden" id="idInput" name="id">
+
+            <div class="mb-3">
+              <label for="fileInput" class="form-label fw-semibold">Виберіть файл квитанції</label>
+              <input type="file" class="form-control form-control-lg" id="fileInput" required>
+              <div class="form-text mt-2 text-muted">
+                Дозволені формати:
+                <strong>JPG, JPEG, PNG, GIF, PDF, HEIC, HEIF</strong><br>
+                Максимальний розмір файлу: <strong>до 10 МБ</strong>
+              </div>
+            </div>
+
+
+
+            <button type="button" id="uploadButton" class="btn btn-primary w-100 py-3 fw-bold">
+              🚀 Завантажити файл
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer bg-dark mt-auto py-5">
+    <div class="container-xl px-4 px-sm-5 px-lg-4">
+      <div class="row g-4 text-sm footer-content">
+
+        <div class="col-md-3 col-12 text-md-start text-center">
+          <span class="uk-logo d-block">Helpsy</span>
+          <span class="uk-logo-sub d-block">Підтримка вашого ментального здоров'я</span>
+          <p class="mt-2 text-footer">
+            Наша місія — зробити психологічну підтримку доступною та зрозумілою для кожного.
+          </p>
+          <p class="text-footer small mb-0">v.2.1</p>
+        </div>
+
+        <div class="col-md-9 d-flex flex-wrap justify-content-end gap-4 footer-links text-md-end text-center">
+
+          <div class="col-md-3 col-12">
+            <h4 class="fs-5 fw-bold text-white mb-3">Допомога</h4>
+            <ul class="list-unstyled mb-0">
+              <li>
+                <a href="https://psytests.psikhiatr-onlayn.kiev.ua/pp" target="_blank" rel="noopener noreferrer"
+                  class="footer-link">Політика конфіденційності</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-md-3 col-12">
+            <h4 class="fs-5 fw-bold text-white mb-3">Контакти</h4>
+            <p>
+              <a href="https://forms.gle/BubikRYKUbMaEMLb8" target="_blank" class="footer-link">Звернутися
+                до нас</a>
+            </p>
+            <p class="footer-link mb-0">+38(044)338-26-53</p>
+          </div>
+
+          <div class="col-md-3 col-12">
+            <h4 class="fs-5 fw-bold text-white mb-3">Ми посилаємось на</h4>
+            <div class="d-flex flex-column align-items-center align-items-md-start gap-2">
+              <img src="img/moz.webp" alt="Логотип МОЗ" class="footer-logo img-fluid mb-2">
+              <img src="img/who.webp" alt="Логотип ВООЗ" class="footer-logo img-fluid mb-2">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+  <script>
+
+    // --- Копирование номера карты ---
+    const cardInput = document.getElementById('cardNumberInput');
+    cardInput.addEventListener('click', () => {
+      cardInput.select();
+      navigator.clipboard.writeText(cardInput.value).then(() => {
+        showToast("Номер картки скопійовано ✅");
+      });
+    });
+
+    // --- Копирование промокода ---
+    const promoBox = document.getElementById('promoCodeBox');
+    promoBox.addEventListener('click', () => {
+      navigator.clipboard.writeText(promoBox.textContent).then(() => {
+        showToast("Промокод скопійовано ✅");
+      });
+    });
+
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body

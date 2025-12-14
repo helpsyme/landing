@@ -1,0 +1,828 @@
+:root {
+  --color-background-start: #ecedf3;
+  --color-background-end: #d8d8e5;
+  --dark-bg: #1b2831;
+  --color-card: #ffffff;
+  --color-text-main: #2c2c2e;
+  --color-text-subtle: #8e8e93;
+  --color-accent-blue: #007aff;
+  --color-focus-shadow: rgba(0, 122, 255, 0.2);
+  --color-success: #34c759;
+  --color-border-light: #c8c8d3;
+  --color-shadow: rgba(0, 0, 0, 0.08);
+  --color-button-inactive: #f7f7f9;
+  --color-button-inactive-border: #e0e0e5;
+  --color-price-gradient-start: #e1e9ff;
+  --color-price-gradient-end: #f5f8ff;
+  --color-price-old-subtle: #9999a0;
+  --color-price-new-bold: #c70039;
+  --color-price-block-shadow: rgba(0, 122, 255, 0.25);
+  --bs-body-bg: var(--light-gray-bg);
+  --bs-body-color: var(--dark-bg);
+  --bs-primary: var(--main-blue);
+  --bs-font-sans-serif: 'Roboto', system-ui, -apple-system, "Segoe UI", "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+
+/* Стилі для логотипів, якщо 'var(--header-bg)' та 'var(--footer-bg)' не визначені у style.css */
+:root {
+  /* Приклади змінних, якщо їх немає у style.css */
+  --header-bg: #1b2831;
+  /* Світлий фон для прикладу */
+  --footer-bg: #1b2831;
+  /* Темний фон для прикладу */
+  --main-blue: #007bff;
+  /* Основний синій колір */
+  --footer-text: #adb5bd;
+  /* Колір тексту у футері */
+}
+
+/* Стилі логотипу */
+.uk-logo {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--main-blue) !important;
+  transition: color 0.3s;
+}
+
+.uk-logo:hover {
+  color: var(--main-blue);
+}
+
+.uk-logo-sub {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--logo-sub-text) !important;
+  margin-top: -4px;
+
+}
+
+/* Тіні та радіус */
+.shadow-soft-lg {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.rounded-3xl {
+  border-radius: 1.5rem !important;
+}
+
+/* Навігація */
+.navbar-dark-text .nav-link {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-family: 'Roboto', sans-serif;
+  transition: color 0.3s;
+}
+
+.navbar-dark-text .nav-link:hover {
+  color: var(--light-bg) !important;
+}
+
+.navbar-toggler {
+  border: none;
+  color: var(--main-blue);
+  background-color: rgba(255, 255, 255, 0.1);
+  font-family: 'Roboto', sans-serif;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.25rem rgba(51, 153, 255, 0.2);
+}
+
+.uk-logo {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 2rem;
+  color: var(--main-blue);
+  /* Або інший колір */
+}
+
+.uk-logo-sub {
+  font-size: 0.8rem;
+  color: #6c757d;
+  /* Або інший колір */
+}
+
+.navbar-dark-text .nav-link {
+  color: #212529 !important;
+  /* Колір посилань, якщо хедер світлий */
+}
+
+.navbar-dark-text .navbar-brand .uk-logo,
+.navbar-dark-text .navbar-brand .uk-logo-sub {
+  color: #212529;
+  /* Колір логотипу, якщо хедер світлий */
+}
+
+.uk-logo-sub {
+  color: #6c757d !important;
+  ;
+}
+
+header .shadow {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+
+/* Загальний фон, шрифти та Flex-контейнер для центровки */
+body {
+  background:
+    repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 1px, transparent 1px, transparent 20px),
+    linear-gradient(150deg, var(--color-background-start) 0%, var(--color-background-end) 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  color: var(--color-text-main);
+  line-height: 1.6;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Контейнер вмісту форми - центровка */
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.container {
+  max-width: 600px;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* --- СТИЛІ ХЕДЕРА --- */
+.app-header {
+  width: 100%;
+  background-color: var(--color-card);
+  padding: 15px 30px;
+  border-bottom: 1px solid var(--color-border-light);
+  box-shadow: 0 1px 4px var(--color-shadow);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.header-logo {
+  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  color: var(--color-accent-blue);
+  text-transform: uppercase;
+  margin-right: auto;
+}
+
+/* --- СТИЛІ ФУТЕРА --- */
+.app-footer {
+  margin-top: auto;
+  width: 100%;
+  background-color: var(--color-card);
+  padding: 10px 30px;
+  border-top: 1px solid var(--color-border-light);
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--color-text-subtle);
+}
+
+.app-footer span {
+  color: var(--color-accent-blue);
+  font-weight: 700;
+}
+
+h1 {
+  font-weight: 700;
+  color: var(--color-text-main);
+  text-align: center;
+  margin-bottom: 35px;
+  font-size: 2.2rem;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+label,
+.form-label {
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  /* Додано для вирівнювання тексту праворуч */
+  text-align: left;
+  /* Гарантуємо, що мітка займає повну ширину, якщо вона не є d-block, хоча form-label зазвичай d-block */
+  display: block;
+}
+
+.booking-time-block {
+  margin-top: 125px;
+  margin-bottom: 125px;
+}
+
+form {
+  background-color: var(--color-card);
+  border-radius: 28px;
+  padding: 35px;
+  box-shadow: 0 10px 30px var(--color-shadow);
+  border: 1px solid var(--color-border-light);
+}
+
+.doctor-card {
+  text-align: center;
+  margin-bottom: 30px;
+  background-color: #2c2c2e0e;
+  padding: 15px;
+  border-radius: 25px;
+}
+
+.doctor-card img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  border: 4px solid var(--color-accent-blue);
+  box-shadow: 0 4px 10px var(--color-shadow);
+}
+
+.form-control[disabled] {
+  background-color: transparent;
+  color: var(--color-text-main);
+  font-weight: 700;
+  border: none;
+  text-align: center;
+  padding: 0;
+  font-size: 1.2rem;
+}
+
+.price-block {
+  max-width: 500px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, var(--color-price-gradient-start), var(--color-price-gradient-end));
+  border-radius: 28px;
+  padding: 35px 30px;
+  margin-bottom: 40px;
+  box-shadow: 0 15px 35px var(--color-price-block-shadow);
+  border: 1px solid #a8c4ff;
+  transition: all 0.3s ease-in-out;
+}
+
+.price-block .price-label {
+  font-size: 0.95rem;
+  color: var(--color-accent-blue);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+}
+
+.price-block .price-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.price-block .price-new {
+  font-weight: 900;
+  color: var(--color-price-new-bold);
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+.price-block .price-old {
+  text-decoration: line-through;
+  color: var(--color-price-old-subtle);
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+.price-block .promo-info {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px dashed #b0c2e3;
+  font-size: 1rem;
+  color: var(--color-text-subtle);
+}
+
+.price-block .promo-info span {
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.form-control {
+  border-radius: 12px;
+  border: 1px solid var(--color-border-light);
+  padding: 12px 18px;
+  font-size: 1rem;
+  background-color: var(--color-button-inactive);
+}
+
+.form-control:focus {
+  border-color: var(--color-accent-blue);
+  box-shadow: 0 0 0 3px var(--color-focus-shadow);
+  background-color: var(--color-card);
+}
+
+.btn-outline-primary,
+.btn-outline-success {
+  border-radius: 20px;
+  font-weight: 500;
+  padding: 8px 16px;
+  transition: all 0.2s;
+  border: 1px solid var(--color-button-inactive-border);
+  color: var(--color-text-main);
+  background-color: var(--color-button-inactive);
+}
+
+.btn-outline-primary.active,
+.btn-outline-success.active {
+  color: #fff !important;
+  background-color: var(--color-accent-blue) !important;
+  border-color: var(--color-accent-blue) !important;
+  box-shadow: 0 2px 5px rgba(0, 122, 255, 0.3);
+}
+
+.btn-primary {
+  border-radius: 16px;
+  font-weight: 600;
+  background-color: var(--color-accent-blue);
+  border-color: var(--color-accent-blue);
+  padding: 14px 20px;
+  font-size: 1.05rem;
+  box-shadow: 0 5px 15px rgba(0, 122, 255, 0.25);
+}
+
+.btn-primary:hover {
+  background-color: #0066cc;
+  border-color: #0066cc;
+  box-shadow: 0 8px 18px rgba(0, 122, 255, 0.35);
+}
+
+.date-card {
+  border: 1px solid var(--color-border-light);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.card-header {
+  background-color: var(--color-card);
+  border-bottom: none;
+  font-weight: 600;
+  color: var(--color-text-main);
+  padding: 14px 20px !important;
+  cursor: pointer;
+}
+
+.toggle-icon {
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: transform 0.3s;
+}
+
+.card-header[aria-expanded="true"] .toggle-icon {
+  transform: rotate(90deg);
+}
+
+.card-body {
+  border-top: 1px solid var(--color-button-inactive-border);
+  background-color: var(--color-button-inactive);
+  padding: 15px 20px;
+}
+
+#toast-container {
+  z-index: 10800;
+}
+
+/* Оверлей со спиннером */
+#loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#loadingOverlay.hidden {
+  display: none;
+}
+
+.discount-highlight {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #c70039;
+  text-shadow: 0 0 10px rgba(199, 0, 57, 0.6);
+  animation: pulse 1.5s infinite;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.is-invalid {
+  border-color: #dc3545 !important;
+  box-shadow: none;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+footer {
+  background-color: var(--footer-bg) !important;
+  color: var(--footer-text);
+}
+
+footer .footer-link {
+  color: var(--main-blue);
+  transition: color 0.3s;
+  text-decoration: none;
+}
+
+footer .footer-link:hover {
+  color: #fff;
+}
+
+footer .text-footer {
+  color: var(--footer-text);
+}
+
+.footer-logo {
+  max-width: 150px;
+  margin: 0 auto;
+}
+
+/* ===== Мобильная адаптация футера ===== */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column !important;
+    text-align: center;
+  }
+
+  footer .col-md-9 {
+    justify-content: center !important;
+  }
+
+  footer .col-md-3,
+  footer .col-6,
+  footer .col-12 {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .footer-logo {
+    max-width: 120px;
+    margin: 0 auto;
+  }
+
+  footer h4 {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+
+  footer p,
+  footer a {
+    font-size: 0.9rem;
+  }
+}
+
+/* --- Container --- */
+.container {
+  max-width: 720px;
+  width: 90%;
+  background: var(--color-card-bg);
+  border-radius: 28px;
+  padding: 40px 45px;
+
+  text-align: center;
+  margin: 0 auto;
+
+}
+
+.payment-content-block {
+  margin-top: 55px;
+  background-color: white;
+  box-shadow: 0 10px 30px var(--color-shadow);
+}
+
+/* --- Price Block --- */
+.price-block {
+  background: linear-gradient(135deg, var(--color-promo-bg-start), var(--color-promo-bg-end));
+  border-radius: 24px;
+  padding: 35px 25px;
+  box-shadow: 0 8px 25px rgba(0, 122, 255, 0.12);
+  border: 1px solid #a8c4ff;
+  max-width: 450px;
+  margin: 0 auto 50px auto;
+}
+
+.price-label {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  color: var(--color-accent-blue);
+}
+
+.price-old-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.discount-badge {
+  background-color: var(--color-discount-badge);
+  color: #fff;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 14px;
+  font-size: 1rem;
+  box-shadow: 0 3px 6px rgba(255, 59, 48, 0.3);
+}
+
+.original-price-info {
+  font-size: 1rem;
+  color: #6e6e73;
+}
+
+.price-old {
+  text-decoration: line-through;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.price-new-wrapper {
+  margin-top: 15px;
+  padding-bottom: 10px;
+}
+
+.price-new {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--color-price-final);
+  line-height: 1;
+}
+
+.discount-note {
+  font-size: 1rem;
+  color: var(--color-text-main);
+  font-weight: 600;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px dashed #c8c8d3;
+  margin-bottom: 0;
+}
+
+.discount-note strong {
+  color: var(--color-accent-blue);
+}
+
+/* --- Card Action Block --- */
+.card-action-block {
+  border-radius: 20px;
+  padding: 0;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+/* --- Step number styles --- */
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-accent-blue);
+  color: #fff;
+  font-weight: 700;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+  font-size: 1rem;
+}
+
+/* --- Wrapper for visual card + instructions --- */
+.card-wrapper {
+  max-width: 480px;
+  margin: 0 auto 40px auto;
+  position: relative;
+  /* for positioning toast fallback */
+}
+
+/* --- Visual card --- */
+.card-visual {
+  background: linear-gradient(135deg, #0f4b8a, #1ea6ff);
+  border-radius: 14px 14px 0 0;
+  padding: 18px;
+  color: #fff;
+  text-align: center;
+  /* Центруємо номер */
+  box-shadow: 0 12px 30px rgba(16, 94, 255, 0.18), 0 2px 6px rgba(0, 0, 0, 0.12);
+  position: relative;
+  overflow: visible;
+  /* allow toast overflow */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 0;
+}
+
+/* Убиваем чип */
+.card-chip {
+  display: none !important;
+}
+
+/* --- Card number input --- */
+.card-number-input {
+  display: block;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+  font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 6px 0 10px 0;
+  caret-color: #ffe;
+  cursor: pointer;
+  user-select: all;
+  text-align: center;
+  /* Центруємо номер */
+}
+
+/* --- Hint --- */
+.card-number-hint {
+  font-size: 0.85rem;
+  opacity: 0.95;
+  margin-top: 6px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* --- Instruction block --- */
+.payment-instruction-block {
+  background: var(--color-light-blue-bg);
+  border-radius: 0 0 14px 14px;
+  border: 1px solid var(--color-border-light);
+  border-top: none;
+  padding: 18px 20px;
+  margin-top: 0;
+  text-align: left;
+}
+
+.payment-instruction-block p {
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.payment-instruction-block strong {
+  color: var(--color-price-final);
+}
+
+.promo-code-box {
+  display: inline-block;
+  background-color: #fff;
+  color: var(--color-accent-blue);
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--color-accent-blue);
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* --- Payment & Warning --- */
+.payment-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: left;
+  margin-top: 40px;
+  padding: 0 5px;
+}
+
+.payment-text b {
+  color: var(--color-accent-blue);
+}
+
+.warning-box {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #fff8f8;
+  border: 1px solid #ff9999;
+  border-radius: 12px;
+  font-size: 0.85rem;
+}
+
+.warning-box b {
+  color: #cc3333;
+}
+
+/* --- Media Queries --- */
+@media (max-width: 767px) {
+  .container {
+    width: 100%;
+    padding: 20px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  .card-visual {
+    border-radius: 8px 8px 0 0;
+    padding: 14px;
+  }
+
+  .card-number-input {
+    font-size: 1.35rem;
+    letter-spacing: 1.4px;
+  }
+
+  .payment-instruction-block {
+    border-radius: 0 0 12px 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    width: 100%;
+    padding: 15px;
+    border-radius: 0;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .card-number-input {
+    font-size: 1.4rem;
+  }
+}
+
+.status-icon{
+  font-size: 64px;
+  color: #007aff;
+  margin-bottom: 20px;
+}
+.note{
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 25px;
+}
+.text-block{
+  border-radius:16px;
+  padding: 30px 35px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.text-block.bg1{
+  background: #f1f5ff;
+  border:1px solid #d0d4e0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  text-align:center;
+  font-size:1.2rem;
+  font-weight:600;
+  line-height:1.6;
+}
+.text-block.bg2{
+  background:#f9f9ff;
+  border:1px solid #e0e0f0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  text-align:left;
+  font-size:1rem;
+  line-height:1.6;
+}
+.text-block.bg3{
+  text-align:left;
+  font-size:1rem;
+  line-height:1.6;
+  font-style: italic; /* делаем текст курсивом */
+}
+
+.thankyou-content-block {
+  margin-top: 55px;
+  margin-bottom: 55px;
+  background-color: white;
+}
